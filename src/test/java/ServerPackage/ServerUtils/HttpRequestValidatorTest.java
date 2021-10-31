@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpRequestValidatorTest {
@@ -111,5 +113,78 @@ class HttpRequestValidatorTest {
 
     @Test
     void validateBody() {
+        LOGGER.info("Validate Body Test 1");
+        String body = "this is the body";
+        String requestType = "POST";
+        HashMap<String, String> header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()));
+        header.put("Content-Type", "Wtv goes in here");
+        boolean requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
+        LOGGER.info("Validate Body Test 2");
+        body = "this is the body";
+        requestType = "POST";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()+1));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertFalse(requestIsValid);
+
+        //should return true, because it doesn't care about the body as the method is GET
+        LOGGER.info("Validate Body Test 3");
+        body = "this is the body";
+        requestType = "GET";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()+1));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
+        LOGGER.info("Validate Body Test 4");
+        body = "";
+        requestType = "POST";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()+1));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertFalse(requestIsValid);
+
+        LOGGER.info("Validate Body Test 5");
+        body = "";
+        requestType = "POST";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
+        LOGGER.info("Validate Body Test 5");
+        body = "blah blah ___----B^%8L";
+        requestType = "POST";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
+        LOGGER.info("Validate Body Test 6");
+        body = "blah blah ___----B^%8L";
+        requestType = "PUT";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
+        LOGGER.info("Validate Body Test 7");
+        body = "blah blah ___----B^%8L";
+        requestType = "DELETE";
+        header = new HashMap<>();
+        header.put("Content-Length", String.valueOf(body.length()));
+        header.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
+        assertTrue(requestIsValid);
+
     }
 }

@@ -94,10 +94,9 @@ public class HTTPParser {
             bodyLine = reader.readLine();
         }
 
-        body = HttpRequestGenerator.getBodyToString(messageBody);
+        body = messageBody.toString();
         String requestType = getRequestType();
         requestIsValid = HttpRequestValidator.validateBody(header, requestType, body);
-
 
         LOGGER.info("Body is : " + getBody());
 
@@ -120,12 +119,14 @@ public class HTTPParser {
     }
 
     private HashMap<String, String> generateHeader (String headerLine, HashMap<String, String> header) {
-//        LOGGER.info("Generating header ");
+//        LOGGER.info("Parsing header : " + headerLine);
 
         requestIsValid = HttpRequestValidator.validateHeader(headerLine);
 
+//        LOGGER.info("Parsing header is valid : " + requestIsValid);
+
         if (requestIsValid){
-            header = HttpRequestGenerator.generateHeader(headerLine, header);
+            HttpRequestGenerator.generateHeader(headerLine, header);
             return header;
         }
 

@@ -59,11 +59,15 @@ public class HttpConstants {
             "Transfer-Encoding", "TE", "Trailer", "Alt-Svc", "Date", "Early-Data", "Large-Allocation",
             "Link", "Push-Policy", "Retry-After", "Accept-Push-Policy", "Accept-Signature",
             "Signature", "Signed-Headers", "Server-Timing", "Service-Worker-Allowed",
-            "SourceMap", "Upgrade", "X-DNS-Prefetch-Control"
+            "SourceMap", "Upgrade", "X-DNS-Prefetch-Control", "DNT"
     };
 
     public static final String[] bodyMethods = {
             HttpConstants.POST, HttpConstants.PATCH, HttpConstants.PUT, HttpConstants.DELETE, HttpConstants.HEAD
+    };
+
+    public static final String[] supportedMethods = {
+            HttpConstants.GET, HttpConstants.POST
     };
 
 

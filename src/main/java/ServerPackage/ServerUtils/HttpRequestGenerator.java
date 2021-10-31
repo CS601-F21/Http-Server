@@ -1,8 +1,13 @@
 package ServerPackage.ServerUtils;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 
 public class HttpRequestGenerator {
+
+    private static final Logger LOGGER = LogManager.getLogger(HttpRequestGenerator.class);
 
     public static HashMap<String, String> generateRequest (String request){
         String[] brokenDownRequest = request.split(" ");
@@ -15,11 +20,17 @@ public class HttpRequestGenerator {
     }
 
     public static HashMap<String, String> generateHeader(String headerLine, HashMap<String, String> header) {
+
         String[] headerParts = headerLine.split(":", 2);
         String headerLabel = headerParts[0];
         String headerBody = headerParts[1];
 
+//        LOGGER.info("header size before is : " + header.size());
+//        LOGGER.info("req generator header label -----> " + headerLabel + " ---> header body ---> " + headerBody);
+
         header.put(headerLabel, headerBody);
+//        LOGGER.info("header size after is : " + header.size());
+
         return header;
     }
 

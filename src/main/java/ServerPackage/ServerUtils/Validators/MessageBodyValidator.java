@@ -15,24 +15,24 @@ public class MessageBodyValidator {
     private String[] requestsWhichRequireBody;
     private static final Logger LOGGER = LogManager.getLogger(MessageBodyValidator.class);
 
-    /**
-     * Since the body we receive will be in the following format :
-     *      message=120401325X
-     * The length of the body will be  8 + len(message_content)
-     * in this case it is 8 + 10 = 18.
-     * The way the code is written, the 8 will be a constant
-     * This variable will be used to validate the length of the body
-     *
-     * The String body which we receive in the constructor will just be the message content
-     * we have to subtract this int from the content length of add it to the body.length()
-     */
-    private final int removeFromBodyLength = 8;
+//    /**
+//     * Since the body we receive will be in the following format :
+//     *      message=120401325X
+//     * The length of the body will be  8 + len(message_content)
+//     * in this case it is 8 + 10 = 18.
+//     * The way the code is written, the 8 will be a constant
+//     * This variable will be used to validate the length of the body
+//     *
+//     * The String body which we receive in the constructor will just be the message content
+//     * we have to subtract this int from the content length of add it to the body.length()
+//     */
+//    private final int removeFromBodyLength = 8;
 
     public MessageBodyValidator(HashMap<String, String> headers, String requestType, String body) {
         this.headers = headers;
         this.requestType = requestType;
-        this.body = body;
-        LOGGER.info("Received body =========================> " + body);
+        this.body = body.strip();
+//        LOGGER.info("Received body =========================> " + body + " length of body is ====> " + body.length());
         this.valid = true;
         this.requestWarrantsBody = false;
         requestsWhichRequireBody = HttpConstants.bodyMethods;
@@ -60,9 +60,9 @@ public class MessageBodyValidator {
     }
 
     private void validateContentLengthIsPresent() {
-        for (String key : headers.keySet()){
-            LOGGER.info("Header contains key ---> " +key);
-        }
+//        for (String key : headers.keySet()){
+//            LOGGER.info("Header contains key ---> " +key);
+//        }
         if (!headers.containsKey("Content-Type") || !headers.containsKey("Content-Length")){
             valid = false;
             LOGGER.info("Content Length or Content Type is not present");
@@ -71,10 +71,16 @@ public class MessageBodyValidator {
     }
 
     private void validateContentLength() {
+        int expectedBodyLength = Integer.parseInt(headers.get("Content-Length"));
+        valid = (expectedBodyLength == body.length());
     }
 
 
     public boolean isValid() {
         return valid;
+    }
+
+    public boolean requestWarrantsBody(){
+        return requestWarrantsBody;
     }
 }
