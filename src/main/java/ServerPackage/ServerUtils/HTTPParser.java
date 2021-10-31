@@ -38,7 +38,7 @@ public class HTTPParser {
         this.request = new HashMap<>();
         this.requestIsValid = true;
         this.doneProcessingRequest = false;
-        fullRequest = generateFullRequest(inputStream);
+        fullRequest = generateFullRequest(this.inputStream);
         LOGGER.info("Full request is : " + fullRequest);
         LOGGER.info("Length of full request is " + fullRequest.length());
         parseFullRequest(fullRequest);
