@@ -35,11 +35,13 @@ public class HeaderValidator {
         }
 
         if (headerParts[0].strip() == ""){
+            LOGGER.info("Header validator, key is empty");
             valid = false;
             return;
         }
 
         if (headerParts[1].strip() == ""){
+            LOGGER.info("Header validator, value is empty");
             valid = false;
             return;
         }

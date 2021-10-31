@@ -71,8 +71,11 @@ public class MessageBodyValidator {
     }
 
     private void validateContentLength() {
-        int expectedBodyLength = Integer.parseInt(headers.get("Content-Length"));
-        valid = (expectedBodyLength == body.length());
+        if (valid) {
+//        LOGGER.info("Content Length in header is : " + headers.get("Content-Length") + " type is : " + headers.get("Content-Length").getClass());
+            int expectedBodyLength = Integer.parseInt(headers.get("Content-Length").strip());
+            valid = (expectedBodyLength == body.length());
+        }
     }
 
 

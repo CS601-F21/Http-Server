@@ -71,10 +71,16 @@ public class HTTPParser {
 
         //next to process the headers, we keep sending it in line by line till we encounter an empty line
         String headerLine = reader.readLine();
-        while (headerLine.length() > 0){
-            //generating header
-            header = generateHeader(headerLine, header);
-            headerLine = reader.readLine();
+        //this check is there, in case we get a request with no headers
+        if (headerLine != null) {
+            while (headerLine.length() > 0) {
+                //generating header
+                header = generateHeader(headerLine, header);
+                if (!requestIsValid) break;
+                headerLine = reader.readLine();
+            }
+        } else {
+            requestIsValid = false;
         }
 
         //if request is not valid, we return
@@ -119,7 +125,7 @@ public class HTTPParser {
     }
 
     private HashMap<String, String> generateHeader (String headerLine, HashMap<String, String> header) {
-//        LOGGER.info("Parsing header : " + headerLine);
+        LOGGER.info("Parsing header : " + headerLine);
 
         requestIsValid = HttpRequestValidator.validateHeader(headerLine);
 

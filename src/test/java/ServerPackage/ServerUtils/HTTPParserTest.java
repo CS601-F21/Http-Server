@@ -38,9 +38,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertTrue(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,6 +74,8 @@ class HTTPParserTest {
                     "message=testing";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertTrue(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,9 +97,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,9 +123,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,9 +149,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -165,13 +175,19 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * TODO failing test7
+     */
 
     @Test
     @DisplayName("Request with no headers - should not work")
@@ -180,6 +196,8 @@ class HTTPParserTest {
             String httpRequest = "GET /slackbot HTTP/1.1\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -201,9 +219,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,9 +245,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,9 +271,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -273,9 +297,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Dest: document\n" +
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: none\n" +
-                    "Sec-Fetch-User: ?1";
+                    "Sec-Fetch-User: ?1\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -306,6 +332,8 @@ class HTTPParserTest {
                     "message=testing";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -337,6 +365,8 @@ class HTTPParserTest {
                     "message=testing";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -363,9 +393,11 @@ class HTTPParserTest {
                     "Sec-Fetch-Mode: navigate\n" +
                     "Sec-Fetch-Site: same-origin\n" +
                     "Sec-Fetch-User: ?1\n" +
-                    "Cache-Control: max-age=0\n";
+                    "Cache-Control: max-age=0\n\n";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -396,6 +428,8 @@ class HTTPParserTest {
                     "message=testing";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -408,6 +442,8 @@ class HTTPParserTest {
             String httpRequest = "";
 
             HTTPParser parser = getLoadedParser(httpRequest);
+            boolean isValid = parser.isRequestIsValid();
+            assertFalse(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }
