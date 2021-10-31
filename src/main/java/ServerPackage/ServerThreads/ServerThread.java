@@ -46,44 +46,50 @@ public class ServerThread extends Thread {
         ){
             //https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
             HTTPParser httpParser = new HTTPParser(inputStream);
+            boolean validRequest = httpParser.isRequestIsValid();
 
-            //if either the request map or the header map is empty, then it is a bad request and we generate that page
-            if (httpParser.getRequest().isEmpty() || httpParser.getHeader().isEmpty()){
-                LOGGER.info("Received incorrect request");
-                new BadRequestHandler().handle(httpParser, response);
-            }
-
-
-            LOGGER.info("Server -> request type is : " + httpParser.getRequestType());
-            LOGGER.info("Server -> request path is : " + httpParser.getRequestPath().strip());
-            LOGGER.info("Server -> request httpVersion is : " + httpParser.getRequestHttpVersion());
-
-            String path = httpParser.getRequestPath().strip();
-
-            if (!map.contains(path)){
-                LOGGER.info("Map does not contain the path : " + path);
-                new PageNotFoundHandler().handle(httpParser, response);
-            } else{
-                LOGGER.info("Map contains the path : " + path);
-                /**
-                 * Not every task needs an inverted index, so we only send the inverted index to the
-                 * handlers that actually need it
-                 */
-                if (path.equals("/find")){
-                    FindHandler findHandler = (FindHandler) map.getObject(path);
-                    findHandler.initializeIndex(invertedIndex);
-                    findHandler.handle(httpParser, response);
-                } else if (path.equals("/reviewsearch")){
-                    ReviewSearchHandler searchHandler = (ReviewSearchHandler) map.getObject(path);
-                    searchHandler.initializeIndex(invertedIndex);
-                    searchHandler.handle(httpParser, response);
-                } else if (path.equals("/slackbot")){
-                    SlackBotHandler slackBotHandler = (SlackBotHandler) map.getObject(path);
-                    slackBotHandler.initializeMethod(methods);
-                    slackBotHandler.handle(httpParser, response);
-                } else {
-                    map.getObject(path).handle(httpParser, response);
+            if (validRequest) {
+                //if either the request map or the header map is empty, then it is a bad request and we generate that page
+                if (httpParser.getRequest().isEmpty() || httpParser.getHeader().isEmpty()) {
+                    LOGGER.info("Received incorrect request");
+                    new BadRequestHandler().handle(httpParser, response);
                 }
+
+
+                LOGGER.info("Server -> request type is : " + httpParser.getRequestType());
+                LOGGER.info("Server -> request path is : " + httpParser.getRequestPath().strip());
+                LOGGER.info("Server -> request httpVersion is : " + httpParser.getRequestHttpVersion());
+
+                String path = httpParser.getRequestPath().strip();
+
+                if (!map.contains(path)) {
+                    LOGGER.info("Map does not contain the path : " + path);
+                    new PageNotFoundHandler().handle(httpParser, response);
+                } else {
+                    LOGGER.info("Map contains the path : " + path);
+                    /**
+                     * Not every task needs an inverted index, so we only send the inverted index to the
+                     * handlers that actually need it
+                     */
+                    if (path.equals("/find")) {
+                        FindHandler findHandler = (FindHandler) map.getObject(path);
+                        findHandler.initializeIndex(invertedIndex);
+                        findHandler.handle(httpParser, response);
+                    } else if (path.equals("/reviewsearch")) {
+                        ReviewSearchHandler searchHandler = (ReviewSearchHandler) map.getObject(path);
+                        searchHandler.initializeIndex(invertedIndex);
+                        searchHandler.handle(httpParser, response);
+                    } else if (path.equals("/slackbot")) {
+                        SlackBotHandler slackBotHandler = (SlackBotHandler) map.getObject(path);
+                        slackBotHandler.initializeMethod(methods);
+                        slackBotHandler.handle(httpParser, response);
+                    } else {
+                        map.getObject(path).handle(httpParser, response);
+                    }
+                }
+            } else {
+                LOGGER.info("ServerThread -------------> Request is not valid");
+                new BadRequestHandler().handle(httpParser, response);
             }
 
         } catch (IOException e){

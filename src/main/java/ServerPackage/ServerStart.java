@@ -1,10 +1,7 @@
 package ServerPackage;
 
 import ServerPackage.Config.ConfigurationManager;
-import ServerPackage.Handlers.FindHandler;
-import ServerPackage.Handlers.HomePageHandler;
-import ServerPackage.Handlers.ReviewSearchHandler;
-import ServerPackage.Handlers.SlackBotHandler;
+import ServerPackage.Handlers.*;
 import ServerPackage.Servers.InvertedIndexServer;
 import ServerPackage.Servers.Server;
 
@@ -36,10 +33,6 @@ public class ServerStart {
 
         String token = configurationManager.getSlackToken();
 
-        System.out.println(invertedIndexPort);
-        System.out.println(slackBotPort);
-        System.out.println(token);
-
         LOGGER.info("Inverted Index Server Starting at port : " + invertedIndexPort);
         LOGGER.info("Slack Bot Server Starting at port : " + slackBotPort);
 
@@ -52,7 +45,7 @@ public class ServerStart {
             }
             server.addMapping("/", new HomePageHandler());
             server.addMapping("/slackbot", new SlackBotHandler());
-//            server.addMapping("//favicon.ico", new FaviconHandler());
+//            server.addMapping("//favicon.ico", new PageNotFoundHandler());
             server.start();
         });
 
@@ -66,7 +59,7 @@ public class ServerStart {
             invertedIndexServer.addMapping("/", new HomePageHandler());
             invertedIndexServer.addMapping("/find", new FindHandler());
             invertedIndexServer.addMapping("/reviewsearch", new ReviewSearchHandler());
-//            invertedIndexServer.addMapping("/favicon.ico", new FaviconHandler);
+//            invertedIndexServer.addMapping("/favicon.ico", new PageNotFoundHandler());
 
             invertedIndexServer.start();
         });
