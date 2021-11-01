@@ -1,14 +1,18 @@
 package ServerPackage.Servers;
 
+import ServerPackage.HttpUtils.ResponseGenerator;
 import ServerPackage.InvertedIndex.InvertedIndex;
 import ServerPackage.InvertedIndex.InvertedIndexUI;
 import ServerPackage.InvertedIndex.QAList;
 import ServerPackage.InvertedIndex.ReviewList;
 import ServerPackage.ServerThreads.ServerThread;
+import ServerPackage.ServerUtils.HTTPParser;
+import ServerPackage.ServerUtils.HttpWriter;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 
 public class InvertedIndexServer extends Server{
@@ -42,14 +46,17 @@ public class InvertedIndexServer extends Server{
             while (running) {
                 Socket listenerSocket = server.accept();
                 LOGGER.info("Connection accepted : " + listenerSocket.getInetAddress());
-                ServerThread serverThread = new ServerThread(listenerSocket, map);
+                ServerThread serverThread = new ServerThread(listenerSocket, map, runningBoolean);
                 serverThread.setInvertedIndex(invertedIndex);
                 serverThread.start();
+                running = runningBoolean.isRunning();
+                LOGGER.info("In inverted index running is : " + running);
             }
         } catch (IOException e) {
             LOGGER.error("Error in setting up the socket : \n" + e);
         }finally {
             try {
+                LOGGER.info("Closing down inverted index server");
                 server.close();
             } catch (IOException e) {
                 LOGGER.error("Error in closing server socket : \n" + e);
@@ -57,4 +64,30 @@ public class InvertedIndexServer extends Server{
             }
         }
     }
+
+//    private boolean checkIfShutdown (Socket socket){
+//        try (
+//                InputStream inputStream = socket.getInputStream();
+//                HttpWriter response = new HttpWriter(socket);
+//        ) {
+//            LOGGER.info("Checking for shutdown request");
+//            HTTPParser httpParser = new HTTPParser(inputStream);
+//            String path = httpParser.getRequestPath();
+//            ResponseGenerator responseGenerator = new ResponseGenerator();
+//            if (httpParser.isRequestIsValid() && path.equals("/shutdown")) {
+//                LOGGER.info("Shutting down the server");
+//                running = false;
+//                String res = responseGenerator.generateSingleLineResponse("test", "/doesnotmatter", "Server shutting down", "Shutdown");
+//                response.writeResponse(res);
+//            }else {
+//                LOGGER.info("Server stays alive");
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return running;
+//    }
+
 }

@@ -125,7 +125,7 @@ public class HTTPParser {
     }
 
     private HashMap<String, String> generateHeader (String headerLine, HashMap<String, String> header) {
-        LOGGER.info("Parsing header : " + headerLine);
+//        LOGGER.info("Parsing header : " + headerLine);
 
         requestIsValid = HttpRequestValidator.validateHeader(headerLine);
 

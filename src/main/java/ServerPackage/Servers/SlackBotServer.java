@@ -31,14 +31,17 @@ public class SlackBotServer extends Server{
             while (running) {
                 Socket listenerSocket = server.accept();
                 LOGGER.info("Connection accepted : " + listenerSocket.getInetAddress());
-                ServerThread serverThread = new ServerThread(listenerSocket, map);
+                ServerThread serverThread = new ServerThread(listenerSocket, map, runningBoolean);
                 serverThread.setSlackBot(methods);
                 serverThread.start();
+                running = runningBoolean.isRunning();
+                LOGGER.info("In slack bot server running is + " + running);
             }
         } catch (IOException e) {
             LOGGER.error("Error in setting up the socket : \n" + e);
         }finally {
             try {
+                LOGGER.info("Closing down slack bot server");
                 server.close();
             } catch (IOException e) {
                 LOGGER.error("Error in closing server socket : \n" + e);

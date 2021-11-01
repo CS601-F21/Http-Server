@@ -1,3 +1,16 @@
+/**
+ * Author name : Shubham Pareek
+ * Author email : spareek@dons.usfca.edu
+ * Class function : Testing Http parser
+ */
+
+/**
+ * These test cases only test for whether the HttpParser is able to parse the Http requests properly or not. In this class we are not bothered with
+ * how it is able to tell us whether a given Http request is valid or not.
+ *
+ * Testing of the individual methods, such as methods which actually validate the individual components of the requests are done in the HttpRequestValidatorTest
+ * file and can be found over there
+ */
 package ServerPackage.ServerUtils;
 
 import org.apache.log4j.BasicConfigurator;
@@ -184,10 +197,6 @@ class HTTPParserTest {
             e.printStackTrace();
         }
     }
-
-    /**
-     * TODO failing test7
-     */
 
     @Test
     @DisplayName("Request with no headers - should not work")

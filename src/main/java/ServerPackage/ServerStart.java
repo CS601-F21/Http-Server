@@ -2,6 +2,7 @@ package ServerPackage;
 
 import ServerPackage.Config.ConfigurationManager;
 import ServerPackage.Handlers.*;
+import ServerPackage.ServerUtils.RunningBoolean;
 import ServerPackage.Servers.InvertedIndexServer;
 import ServerPackage.Servers.Server;
 
@@ -45,6 +46,8 @@ public class ServerStart {
             }
             server.addMapping("/", new HomePageHandler());
             server.addMapping("/slackbot", new SlackBotHandler());
+            server.addMapping("/shutdown", new ShutdownHandler());
+            server.addMapping("/shutdown?", new ShutdownHandler());
 //            server.addMapping("//favicon.ico", new PageNotFoundHandler());
             server.start();
         });
@@ -59,6 +62,8 @@ public class ServerStart {
             invertedIndexServer.addMapping("/", new HomePageHandler());
             invertedIndexServer.addMapping("/find", new FindHandler());
             invertedIndexServer.addMapping("/reviewsearch", new ReviewSearchHandler());
+            invertedIndexServer.addMapping("/shutdown", new ShutdownHandler());
+            invertedIndexServer.addMapping("/shutdown?", new ShutdownHandler());
 //            invertedIndexServer.addMapping("/favicon.ico", new PageNotFoundHandler());
 
             invertedIndexServer.start();
