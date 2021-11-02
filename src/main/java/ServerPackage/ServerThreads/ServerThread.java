@@ -54,11 +54,11 @@ public class ServerThread extends Thread {
             boolean validRequest = httpParser.isRequestIsValid();
 
             if (validRequest) {
-                //if either the request map or the header map is empty, then it is a bad request and we generate that page
-                if (httpParser.getRequest().isEmpty() || httpParser.getHeader().isEmpty()) {
-                    LOGGER.info("Received incorrect request");
-                    new BadRequestHandler().handle(httpParser, response);
-                }
+//                //if either the request map or the header map is empty, then it is a bad request and we generate that page
+//                if (httpParser.getRequest().isEmpty() || httpParser.getHeader().isEmpty()) {
+//                    LOGGER.info("Received incorrect request");
+//                    new BadRequestHandler().handle(httpParser, response);
+//                }
                 LOGGER.info("request is valid");
 
 

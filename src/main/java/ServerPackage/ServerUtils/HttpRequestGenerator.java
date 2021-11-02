@@ -15,7 +15,7 @@ public class HttpRequestGenerator {
         HashMap<String, String> parsedRequest = new HashMap<>();
         parsedRequest.put("Type", brokenDownRequest[0]);
         parsedRequest.put("Path", brokenDownRequest[1]);
-        parsedRequest.put("httpVersion", brokenDownRequest[2]);
+        parsedRequest.put("HttpVersion", brokenDownRequest[2]);
         return parsedRequest;
     }
 

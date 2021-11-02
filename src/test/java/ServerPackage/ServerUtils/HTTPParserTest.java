@@ -19,16 +19,19 @@ import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HTTPParserTest {
 
     private static final Logger LOGGER = LogManager.getLogger(HTTPParserTest.class);
+    private HashMap<String,String> getRequestHeaders;
 
     @BeforeEach
     void makeLoggerWork (){
@@ -56,6 +59,16 @@ class HTTPParserTest {
             HTTPParser parser = getLoadedParser(httpRequest);
             boolean isValid = parser.isRequestIsValid();
             assertTrue(isValid);
+
+            HashMap<String, String> request = parser.getRequest();
+            HashMap<String, String> headers = parser.getHeader();
+
+            assertTrue(headers.size() ==  12);
+            assertTrue(request.get("Type").equals("GET"));
+            assertTrue(request.get("Path").equals("/slackbot"));
+            assertTrue(request.get("HttpVersion").equals("HTTP/1.1"));
+            assertTrue(parser.getBody().equals(""));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,6 +102,18 @@ class HTTPParserTest {
             HTTPParser parser = getLoadedParser(httpRequest);
             boolean isValid = parser.isRequestIsValid();
             assertTrue(isValid);
+
+            HashMap<String, String> request = parser.getRequest();
+            HashMap<String, String> headers = parser.getHeader();
+
+            assertTrue(headers.size() ==  17);
+            assertTrue(request.get("Type").equals("POST"));
+            assertTrue(request.get("Path").equals("/reviewsearch"));
+            assertTrue(request.get("HttpVersion").equals("HTTP/1.1"));
+
+            String body = parser.getBody();
+            assertEquals(body,"message=testing");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

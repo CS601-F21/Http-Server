@@ -85,7 +85,14 @@ public class HTTPParser {
 
         //if request is not valid, we return
         if (!requestIsValid){
-            LOGGER.info("Got incorrect header");
+            LOGGER.info("Got incorrect header format");
+            return;
+        }
+
+        requestIsValid = HttpRequestValidator.validateAllHeader(header);
+
+        if (!requestIsValid){
+            LOGGER.info("Invalid headers, no Host field");
             return;
         }
 
@@ -151,7 +158,7 @@ public class HTTPParser {
         String[] splitBody = body.split("=",2);
         String uncleanBody = splitBody[1].strip();
         String[] brokenDownBody = uncleanBody.split("\\+");
-        String cleanBody = String.join(" ", brokenDownBody);
+        String cleanBody = String.join(" ", brokenDownBody).strip();
 
         LOGGER.info("Body after cleaning is : " + cleanBody);
         return cleanBody;
@@ -163,7 +170,7 @@ public class HTTPParser {
 
     public String getBody() {
         //send unfiltered body
-        return body;
+        return body.strip();
     }
 
     public String getRequestType () {

@@ -25,4 +25,17 @@ public class HttpRequestValidator {
         boolean valid = messageBodyValidator.isValid();
         return valid;
     }
+
+    /**
+     * Method will be called once we have validated all our headers are in correct format, we validate whether
+     * we have validate whether we have the required headers.
+     * @param header
+     * @return
+     */
+    public static boolean validateAllHeader(HashMap<String, String> header) {
+        if (header.containsKey("Host")){
+            return true;
+        }
+        return false;
+    }
 }
