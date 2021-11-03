@@ -1,4 +1,4 @@
-package ServerPackage.ServerUtils;
+package ServerPackage.HttpUtils;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -10,6 +10,7 @@ public class HttpRequestGenerator {
     private static final Logger LOGGER = LogManager.getLogger(HttpRequestGenerator.class);
 
     public static HashMap<String, String> generateRequest (String request){
+        LOGGER.info("Request generator got line => " + request);
         String[] brokenDownRequest = request.split(" ");
 
         HashMap<String, String> parsedRequest = new HashMap<>();

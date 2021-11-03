@@ -1,4 +1,4 @@
-package ServerPackage.ServerUtils.Validators;
+package ServerPackage.HttpUtils.Validators;
 
 import ServerPackage.HttpUtils.HttpConstants;
 import org.apache.log4j.LogManager;
@@ -49,21 +49,26 @@ public class MessageBodyValidator {
     }
 
     private void validatePostRequest() {
-        for (String methods : requestsWhichRequireBody){
-            if (requestType.equals(methods)){
-                requestWarrantsBody = true;
-                return;
-            }
+//        for (String methods : requestsWhichRequireBody){
+//            if (requestType.equals(methods)){
+//                requestWarrantsBody = true;
+//                return;
+//            }
+//        }
+        if (headers.containsKey("Content-Length")){
+            requestWarrantsBody = true;
+            LOGGER.info("Request has Content-Length field");
+            return;
         }
 
-        LOGGER.info("Request does not warrant a body");
+        LOGGER.info("Request does not have a content-length field");
     }
 
     private void validateContentLengthIsPresent() {
 //        for (String key : headers.keySet()){
 //            LOGGER.info("Header contains key ---> " +key);
 //        }
-        if (!headers.containsKey("Content-Type") || !headers.containsKey("Content-Length")){
+        if (!headers.containsKey("Content-Length")){
             valid = false;
             LOGGER.info("Content Length or Content Type is not present");
             return;

@@ -43,10 +43,10 @@ import java.io.IOException;
  *  changing the state of the class in the ServerThread will make the change visible to the individual servers
  */
 
-public class ServerStart {
+public class StartSlackBotServer {
 
     //declaring the logger
-    private static final Logger LOGGER = LogManager.getLogger(ServerStart.class);
+    private static final Logger LOGGER = LogManager.getLogger(StartSlackBotServer.class);
 
     public static void main (String[] args){
 
@@ -63,7 +63,6 @@ public class ServerStart {
         /**
          * Getting the port number for the respective severs
          */
-        int invertedIndexPort = configurationManager.getIndexPort();
         int slackBotPort = configurationManager.getSlackBotPort();
 
         /**
@@ -71,7 +70,6 @@ public class ServerStart {
          */
         String token = configurationManager.getSlackToken();
 
-        LOGGER.info("Inverted Index Server Starting at port : " + invertedIndexPort);
         LOGGER.info("Slack Bot Server Starting at port : " + slackBotPort);
 
         /**
@@ -100,35 +98,8 @@ public class ServerStart {
         });
 
         /**
-         * Instantitating the thread which will run the inverted index server
-         */
-        Thread invertedIndexStartThread = new Thread(() -> {
-            InvertedIndexServer invertedIndexServer = null;
-            try {
-                /**
-                 * Creating the inverted index server
-                 */
-                invertedIndexServer = new InvertedIndexServer(invertedIndexPort);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            /**
-             * Adding mappings
-             */
-            invertedIndexServer.addMapping("/", new HomePageHandler());
-            invertedIndexServer.addMapping("/find", new FindHandler());
-            invertedIndexServer.addMapping("/reviewsearch", new ReviewSearchHandler());
-            invertedIndexServer.addMapping("/shutdown", new ShutdownHandler());
-            invertedIndexServer.addMapping("/shutdown?", new ShutdownHandler());
-//            invertedIndexServer.addMapping("/favicon.ico", new PageNotFoundHandler());
-
-            invertedIndexServer.start();
-        });
-
-        /**
-         * Starting the threads and hence the servers
+         * Starting the thread and hence the server
          */
         slackBotStartThread.start();
-        invertedIndexStartThread.start();
     }
 }

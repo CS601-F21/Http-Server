@@ -5,7 +5,7 @@
  */
 package ServerPackage.Servers;
 
-import ServerPackage.ServerThreads.ServerThread;
+import ServerPackage.ServerUtils.ServerThreads.ServerThread;
 import com.slack.api.Slack;
 import com.slack.api.methods.MethodsClient;
 import org.apache.log4j.LogManager;

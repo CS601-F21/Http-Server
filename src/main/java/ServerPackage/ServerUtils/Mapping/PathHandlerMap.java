@@ -1,6 +1,5 @@
-package ServerPackage.Mapping;
+package ServerPackage.ServerUtils.Mapping;
 
-import ServerPackage.Handlers.FindHandler;
 import ServerPackage.Handlers.Handler;
 
 import java.util.HashMap;

@@ -1,6 +1,5 @@
-package ServerPackage.ServerUtils.Validators;
+package ServerPackage.HttpUtils.Validators;
 
-import ServerPackage.HttpUtils.HttpConstants;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class HeaderValidator {
         //validates that the header can indeed be broken down into 2 parts
         validateHeaderLength();
         validateHeaderStartsWithCapitalLetter();
-        validateHeaderName();
+//        validateHeaderName();
     }
 
     private void validateHeaderLength() {
@@ -59,21 +58,26 @@ public class HeaderValidator {
         }
     }
 
-    private void validateHeaderName() {
-        if (valid) {
-            String headerName = headerParts[0];
-            boolean validHeaderName = false;
-            String[] commonHeaders = HttpConstants.commonHTTPHeaders;
 
-            for (String name : commonHeaders) {
-                if (headerName.equals(name)) {
-                    validHeaderName = true;
-                    break;
-                }
-            }
-            valid = validHeaderName;
-        }
-    }
+//    private void validateHeaderName() {
+//        if (valid) {
+//            String headerName = headerParts[0];
+//            boolean validHeaderName = false;
+//            String[] commonHeaders = HttpConstants.commonHTTPHeaders;
+//
+//            for (String name : commonHeaders) {
+//                if (headerName.equals(name)) {
+//                    validHeaderName = true;
+//                    break;
+//                }
+//            }
+//            valid = validHeaderName;
+//
+//            if (!validHeaderName){
+//                LOGGER.info("Header " + headerName + " does not exist" );
+//            }
+//        }
+//    }
 
     public boolean isValid() {
         return valid;

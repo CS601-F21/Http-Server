@@ -1,11 +1,11 @@
-package ServerPackage.ServerThreads;
+package ServerPackage.ServerUtils.ServerThreads;
 
 import ServerPackage.Handlers.*;
 import ServerPackage.HttpUtils.ResponseGenerator;
 import ServerPackage.InvertedIndex.InvertedIndexUI;
-import ServerPackage.Mapping.PathHandlerMap;
-import ServerPackage.ServerUtils.HTTPParser;
-import ServerPackage.ServerUtils.HttpWriter;
+import ServerPackage.ServerUtils.Mapping.PathHandlerMap;
+import ServerPackage.HttpUtils.HTTPParser;
+import ServerPackage.HttpUtils.HttpWriter;
 import ServerPackage.ServerUtils.RunningBoolean;
 import com.slack.api.methods.MethodsClient;
 import org.apache.log4j.LogManager;
@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
 
 
 /**

@@ -1,8 +1,4 @@
-package ServerPackage.ServerUtils.Validators;
-
-import ServerPackage.ServerUtils.Validators.HeaderValidator;
-import ServerPackage.ServerUtils.Validators.MessageBodyValidator;
-import ServerPackage.ServerUtils.Validators.RequestValidator;
+package ServerPackage.HttpUtils.Validators;
 
 import java.util.HashMap;
 

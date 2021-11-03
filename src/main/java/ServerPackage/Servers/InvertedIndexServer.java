@@ -8,7 +8,7 @@ package ServerPackage.Servers;
 import ServerPackage.InvertedIndex.InvertedIndexUI;
 import ServerPackage.InvertedIndex.QAList;
 import ServerPackage.InvertedIndex.ReviewList;
-import ServerPackage.ServerThreads.ServerThread;
+import ServerPackage.ServerUtils.ServerThreads.ServerThread;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

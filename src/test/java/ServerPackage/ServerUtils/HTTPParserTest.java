@@ -13,13 +13,13 @@
  */
 package ServerPackage.ServerUtils;
 
+import ServerPackage.HttpUtils.HTTPParser;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

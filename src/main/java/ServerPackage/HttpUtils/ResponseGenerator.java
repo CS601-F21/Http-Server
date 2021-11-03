@@ -1,13 +1,23 @@
+/**
+ * Author name : Shubham Pareek
+ * Author email : spareek@dons.usfca.edu
+ * Class purpose : Generate a Http Request
+ */
 package ServerPackage.HttpUtils;
 
 import ServerPackage.HtmlUtils.HtmlGenerator;
+import ServerPackage.HtmlUtils.HtmlValidator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class ResponseGenerator {
+    private static final Logger LOGGER = LogManager.getLogger(ResponseGenerator.class);
     public ResponseGenerator() {}
 
     public String generateGETResponse (String title, String action, String textBoxLabel){
+        LOGGER.info("Generating GET response -------------");
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.getInputForm(title, action, textBoxLabel);
         String response = getResponse(generatedHtml, HttpConstants.OK);
@@ -65,6 +75,9 @@ public class ResponseGenerator {
         String CRLF = HttpConstants.CRLF;
         String HEADER = HttpConstants.generateHeader(HttpConstants.VERSION, STATUS);
         String CONTENT_LENGTH = HttpConstants.CONTENT_LENGTH;
+
+//        boolean validHtml = HtmlValidator.isValid(generatedHtml);
+//        System.out.println("Generated HTML is valid is ===============> " + validHtml);
 
         String response =
                 HEADER + //this is the status line of the response

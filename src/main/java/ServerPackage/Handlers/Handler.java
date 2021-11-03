@@ -1,7 +1,7 @@
 package ServerPackage.Handlers;
 
-import ServerPackage.ServerUtils.HTTPParser;
-import ServerPackage.ServerUtils.HttpWriter;
+import ServerPackage.HttpUtils.HTTPParser;
+import ServerPackage.HttpUtils.HttpWriter;
 
 public interface Handler {
     /**

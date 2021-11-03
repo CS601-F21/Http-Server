@@ -33,7 +33,7 @@ public class HtmlGenerator {
 
     private String generateHead (String title){
         String head =
-                "<!DOCTYPE html> <html lang=\"en\" style = \"height: 100%; width: 100%\"> <head> <link rel=\"shortcut icon\" href=\"#\">\n <title>" + title + "</title></head>";
+                "<!DOCTYPE html> <html lang=\"en\" style = \"height: 100%; width: 100%\"> <head> <link rel=\"shortcut icon\" href=\"#\"/>\n <title>" + title + "</title></head>";
         return head;
     }
 
@@ -51,13 +51,13 @@ public class HtmlGenerator {
     private String generateForm (String action, String textBoxLabel){
         String form =
                 "<div class = \"formContainer\" style=\"display: flex; height: 5%;\">" +
-                        "<form action = " +action + " style = \" width:80% \"method=" + HttpConstants.POST + ">" +
+                        "<form action = \"" + action + "\" method = \"" + HttpConstants.POST + "\" style = \"width:80% \" >" +
                               "<label for = \"message\" style = \"margin-right:2%; margin-left:3.5%\">" + textBoxLabel + "</label>" +
                               "<input type = \"text\" id = \"message\" name=\"message\"/>" +
                               "<input type = \"submit\" value=\"submit\"/>" +
                        "</form>" +
                         "<form action=\"/shutdown\" style=\" width:20%; display: flex; justify-content: right; \" method=\"GET\">\n" +
-                        "    <input type=\"submit\" style=\"height: 70%; margin-right: 6%;\" value=\"shutdown\">\n" +
+                        "    <input type=\"submit\" style=\"height: 70%; margin-right: 6%;\" value=\"shutdown\"/>\n" +
                         "</form>"+
                 "</div>";
 

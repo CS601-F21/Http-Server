@@ -2,8 +2,8 @@ package ServerPackage.Handlers;
 
 import ServerPackage.HttpUtils.HttpConstants;
 import ServerPackage.HttpUtils.ResponseGenerator;
-import ServerPackage.ServerUtils.HTTPParser;
-import ServerPackage.ServerUtils.HttpWriter;
+import ServerPackage.HttpUtils.HTTPParser;
+import ServerPackage.HttpUtils.HttpWriter;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;

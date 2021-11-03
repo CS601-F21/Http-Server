@@ -7,11 +7,8 @@
 package ServerPackage.Servers;
 
 import ServerPackage.Handlers.Handler;
-import ServerPackage.HttpUtils.ResponseGenerator;
-import ServerPackage.Mapping.PathHandlerMap;
-import ServerPackage.ServerThreads.ServerThread;
-import ServerPackage.ServerUtils.HTTPParser;
-import ServerPackage.ServerUtils.HttpWriter;
+import ServerPackage.ServerUtils.Mapping.PathHandlerMap;
+import ServerPackage.ServerUtils.ServerThreads.ServerThread;
 import ServerPackage.ServerUtils.RunningBoolean;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -51,7 +48,7 @@ public class Server extends Thread{
     /**
      * Boolean to keep tack of whether to continue running the server or not
      */
-    protected boolean running;
+    protected volatile boolean running;
 
 
     public Server (int port) throws IOException {

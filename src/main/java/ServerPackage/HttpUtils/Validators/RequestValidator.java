@@ -1,4 +1,4 @@
-package ServerPackage.ServerUtils.Validators;
+package ServerPackage.HttpUtils.Validators;
 
 import ServerPackage.HttpUtils.HttpConstants;
 import org.apache.log4j.LogManager;

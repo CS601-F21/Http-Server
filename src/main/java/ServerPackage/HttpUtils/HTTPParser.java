@@ -1,6 +1,6 @@
-package ServerPackage.ServerUtils;
+package ServerPackage.HttpUtils;
 
-import ServerPackage.ServerUtils.Validators.HttpRequestValidator;
+import ServerPackage.HttpUtils.Validators.HttpRequestValidator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -155,6 +155,13 @@ public class HTTPParser {
     }
 
     public String cleanBody (String body){
+        /**
+         * This is mainly for the test cases, as the http fetcher is sending an already clean body
+         */
+        if (!body.startsWith("message=")){
+            return body.strip();
+        }
+        LOGGER.info("Received body " + body);
         String[] splitBody = body.split("=",2);
         String uncleanBody = splitBody[1].strip();
         String[] brokenDownBody = uncleanBody.split("\\+");
@@ -182,7 +189,7 @@ public class HTTPParser {
     }
 
     public String getRequestHttpVersion () {
-        return request.get("httpVersion");
+        return request.get("HttpVersion");
     }
 
     public HashMap<String, String> getRequest () {

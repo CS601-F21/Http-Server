@@ -3,8 +3,8 @@ package ServerPackage.Handlers;
 import ServerPackage.HttpUtils.HttpConstants;
 import ServerPackage.HttpUtils.ResponseGenerator;
 import ServerPackage.InvertedIndex.InvertedIndexUI;
-import ServerPackage.ServerUtils.HTTPParser;
-import ServerPackage.ServerUtils.HttpWriter;
+import ServerPackage.HttpUtils.HTTPParser;
+import ServerPackage.HttpUtils.HttpWriter;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
