@@ -42,35 +42,6 @@ public class HttpConstants {
 
 
     /**
-     * This was used to test all the supported headers and to verify whether a header is valid or not
-     */
-    public static final String commonHTTPHeaders[] ={
-            "WWW-Authenticate", "Authorization", "Proxy-Authenticate", "Proxy-Authorization",
-            "Age", "Cache-Control", "Clear-Site-Data", "Expires", "Pragma", "Warning", "Accept-CH",
-            "Accept-CH-Lifetime", "Content-DPR", "Device-Memory", "DPR", "Viewport-Width", "Width",
-            "Downlink", "ECT", "RTT", "Save-Data", "Last-Modified", "ETag", "If-Match", "If-None-Match",
-            "If-Modified-Since", "If-Unmodified-Since", "Vary", "Connection", "Keep-Alive", "Accept",
-            "Accept-Encoding", "Accept-Language", "Expect", "Cookie", "Set-Cookie", "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Credentials", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods",
-            "Access-Control-Expose-Headers", "Access-Control-Max-Age", "Access-Control-Request-Headers",
-            "Access-Control-Request-Method", "Origin", "Timing-Allow-Origin", "Content-Disposition",
-            "Content-Length", "Content-Type", "Content-Encoding", "Content-Language", "Content-Location",
-            "Forwarded", "X-Forwarded-For", "X-Forwarded-Host", "X-Forwarded-Proto", "Via", "Location",
-            "From", "Host", "Referer", "Referrer-Policy", "User-Agent", "Allow", "Server",
-            "Accept-Ranges", "Range", "If-Range", "Content-Range", "Public-Key-Pins", "Public-Key-Pins-Report-Only",
-            "Sec-Fetch-Site", "Sec-Fetch-Mode", "Sec-Fetch-User", "Sec-Fetch-Dest",
-            "Cross-Origin-Embedder-Policy", "Cross-Origin-Opener-Policy", "Cross-Origin-Resource-Policy",
-            "Content-Security-Policy", "Content-Security-Policy-Report-Only",
-            "Expect-CT", "Feature-Policy", "Origin-Isolation", "Strict-Transport-Security",
-            "Upgrade-Insecure-Requests", "X-Content-Type-Options", "X-Download-Options", "X-Frame-Options",
-            "X-Permitted-Cross-Domain-Policies", "X-Powered-By", "X-XSS-Protection",
-            "Transfer-Encoding", "TE", "Trailer", "Alt-Svc", "Date", "Early-Data", "Large-Allocation",
-            "Link", "Push-Policy", "Retry-After", "Accept-Push-Policy", "Accept-Signature",
-            "Signature", "Signed-Headers", "Server-Timing", "Service-Worker-Allowed",
-            "SourceMap", "Upgrade", "X-DNS-Prefetch-Control", "DNT"
-    };
-
-    /**
      * All the methods which require a body
      */
     public static final String[] bodyMethods = {

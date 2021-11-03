@@ -6,6 +6,7 @@
 package ServerPackage.HttpUtils;
 
 import ServerPackage.HtmlUtils.HtmlGenerator;
+import ServerPackage.HtmlUtils.HtmlValidator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -140,8 +141,8 @@ public class ResponseGenerator {
         String HEADER = generateHeader(HttpConstants.VERSION, STATUS);
         String CONTENT_LENGTH = HttpConstants.CONTENT_LENGTH;
 
-//        boolean validHtml = HtmlValidator.isValid(generatedHtml);
-//        System.out.println("Generated HTML is valid is ===============> " + validHtml);
+        boolean validHtml = HtmlValidator.isValid(generatedHtml);
+        System.out.println("Generated HTML is valid is ===============> " + validHtml);
 
         String response =
                 HEADER + //this is the status line of the response

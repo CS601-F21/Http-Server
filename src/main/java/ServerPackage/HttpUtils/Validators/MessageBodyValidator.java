@@ -68,7 +68,7 @@ public class MessageBodyValidator {
         this.headers = headers;
         this.requestType = requestType;
         this.body = body.strip();
-//        LOGGER.info("Received body =========================> " + body + " length of body is ====> " + body.length());
+        LOGGER.info("Received body =========================> " + body + " length of body is ====> " + body.length());
         this.valid = true;
         this.requestWarrantsBody = false;
         requestsWhichRequireBody = HttpConstants.bodyMethods;

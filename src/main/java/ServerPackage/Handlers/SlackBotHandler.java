@@ -13,17 +13,17 @@ import org.apache.log4j.Logger;
 import com.slack.api.Slack;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class SlackBotHandler implements Handler{
     private static final Logger LOGGER = LogManager.getLogger(SlackBotHandler.class);
-    private MethodsClient methods;
+    private String token;
+    private HashMap<String, String> headers;
 
     public SlackBotHandler () {
-        Slack slack = Slack.getInstance();
-        String token = "xapp-1-A02K65YU98X-2667045887826-3d1135a41a4158406143c73cd29f41db1c3e0ddbba0279b66a1399c6e221fea3";
-        MethodsClient methods = slack.methods(token);
-
+        headers = new HashMap<>();
     }
+
     @Override
     public void handle(HTTPParser req, HttpWriter res) {
 
@@ -39,6 +39,7 @@ public class SlackBotHandler implements Handler{
 
                 ChatPostMessageRequest slackRequest = ChatPostMessageRequest.builder().channel("#cs601-project3").text(body).build();
                 ChatPostMessageResponse  slackResponse = methods.chatPostMessage(slackRequest);
+
                 LOGGER.info("Sent Message, response is :");
                 LOGGER.info(slackResponse);
                 String response = responseGenerator.generateSingleLineResponse("Slack Bot", "/slackbot", "Enter Message", "Message Sent");
@@ -63,7 +64,11 @@ public class SlackBotHandler implements Handler{
         }
     }
 
-    public void initializeMethod(MethodsClient methods) {
-        this.methods = methods;
+    private HashMap<String, String> getSlackHeader(){
+        headers.put()
+    }
+
+    public void initializeToken(String token) {
+        this.token = token;
     }
 }

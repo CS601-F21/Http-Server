@@ -1,3 +1,6 @@
+/**
+ * Author : srollins
+ */
 package ServerPackage.HtmlUtils;
 
 import org.xml.sax.InputSource;
@@ -11,7 +14,11 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
- * Helper class with method to determine if an HTML document is well formed.
+ * Helper class with method to determine if an HTML document is well-formed.
+ */
+
+/**
+ * Got this class from https://github.com/CS601-F21/code-examples/blob/main/Web/src/main/java/util/HtmlValidator.java
  */
 public class HtmlValidator {
 

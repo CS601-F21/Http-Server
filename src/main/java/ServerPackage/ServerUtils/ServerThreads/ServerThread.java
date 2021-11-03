@@ -13,7 +13,6 @@ import ServerPackage.ServerUtils.Mapping.PathHandlerMap;
 import ServerPackage.HttpUtils.HTTPParser;
 import ServerPackage.HttpUtils.HttpWriter;
 import ServerPackage.ServerUtils.RunningBoolean;
-import com.slack.api.methods.MethodsClient;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -49,10 +48,9 @@ public class ServerThread extends Thread {
     private InvertedIndexUI invertedIndex;
 
     /**
-     * The slack MethodsClient object, this will only be instantiated if the user is running the slack bot server. To instantiate this
-     * the user will have to call the setSlackBot method
+     * The slack token
      */
-    private MethodsClient methods;
+    private String token;
 
     /**
      * The running boolean, if the user calls the shutdown method, we use the setRunningtoFalse method in this class to let the server know
@@ -76,11 +74,11 @@ public class ServerThread extends Thread {
         this.invertedIndex = invertedIndex;
     }
 
-    public void setSlackBot(MethodsClient methods){
+    public void setSlackBotToken(String token){
         /**
          * This is where we instantiate the MethodsClient object from slack
          */
-        this.methods = methods;
+        this.token = token;
     }
 
     @Override
@@ -174,7 +172,7 @@ public class ServerThread extends Thread {
                         /**
                          * The slack bot handler required the MethodsClient object from slack so we initialize it over here
                          */
-                        slackBotHandler.initializeMethod(methods);
+                        slackBotHandler.initializeToken(token);
                         slackBotHandler.handle(httpParser, response);
                     } else if (path.equals("/shutdown") || path.equals("/shutdown?")){
                         /**

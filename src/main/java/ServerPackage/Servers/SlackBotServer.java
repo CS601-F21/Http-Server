@@ -6,8 +6,6 @@
 package ServerPackage.Servers;
 
 import ServerPackage.ServerUtils.ServerThreads.ServerThread;
-import com.slack.api.Slack;
-import com.slack.api.methods.MethodsClient;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -33,7 +31,11 @@ public class SlackBotServer extends Server{
     /**
      * MethodsClient object we get from the Slack API, this is the object we will use to actually send the message to the slack chat
      */
-    MethodsClient methods;
+//    MethodsClient methods;
+    /**
+     * Token which we will get
+     */
+    private String token;
 
     public SlackBotServer(int port, String token) throws IOException {
         /**
@@ -46,10 +48,15 @@ public class SlackBotServer extends Server{
         super(port);
 
         /**
+         * initializing the token
+         */
+        this.token = token;
+
+        /**
          * Instantiating the Slack object and the MethodsClient object
          */
-        Slack slack = Slack.getInstance();
-        this.methods = slack.methods(token);
+//        Slack slack = Slack.getInstance();
+//        this.methods = slack.methods(token);
 //        ChatPostMessageRequest request = ChatPostMessageRequest.builder().channel("#cs601-project3").text("test").build();
 //        ChatPostMessageResponse response = methods.chatPostMessage(request);
         LOGGER.info("Slack bot server has been initialized");
@@ -80,7 +87,7 @@ public class SlackBotServer extends Server{
                 /**
                  * Since it is a slack bot server, we also have to pass the MethodsClient object as well
                  */
-                serverThread.setSlackBot(methods);
+                serverThread.setSlackBotToken(token);
                 /**
                  * We finally start the server
                  */

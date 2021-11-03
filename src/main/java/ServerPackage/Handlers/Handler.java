@@ -1,3 +1,8 @@
+/**
+ * Author Name : Shubham Pareek
+ * Author Email : spareek@dons.usfca.edu
+ * Class purpose : Handler interface
+ */
 package ServerPackage.Handlers;
 
 import ServerPackage.HttpUtils.HTTPParser;
