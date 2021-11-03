@@ -38,6 +38,25 @@ class HTTPParserTest {
         BasicConfigurator.configure();
     }
 
+    void runAllTests(){
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
+        test6();
+        test7();
+        test8();
+        test9();
+        test10();
+        test11();
+        test12();
+        test13();
+        test14();
+        test15();
+        test16();
+    }
+
     @Test
     @DisplayName("Normal GET request - should work")
     void test1 () {
@@ -344,6 +363,10 @@ class HTTPParserTest {
     @Test
     @DisplayName("POST request with no content length - should not work")
     void test12 () {
+        /**
+         * POST Request does not have to have a content length, this error will be caught by the HttpRequestValidator, when it checks that
+         * the content length field is empty and it has a body
+         */
         try {
             String httpRequest = "POST /reviewsearch HTTP/1.1\n" +
                     "Host: localhost:8080\n" +
@@ -367,7 +390,7 @@ class HTTPParserTest {
 
             HTTPParser parser = getLoadedParser(httpRequest);
             boolean isValid = parser.isRequestIsValid();
-            assertFalse(isValid);
+            assertTrue(isValid);
         } catch (IOException e) {
             e.printStackTrace();
         }

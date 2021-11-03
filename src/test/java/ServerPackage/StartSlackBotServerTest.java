@@ -14,9 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 
@@ -61,24 +58,20 @@ class StartSlackBotServerTest {
 
     }
 
+    void runAllTests(){
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
+        test6();
+        test7();
+    }
+
     @DisplayName("Testing basic response, should work")
     @Test
     void test1 (){
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:9090/slackbot"))
-                .build();
-
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getHeaders());
         int responseCode = response.statusCode();
         assertEquals(responseCode, 200);
     }
@@ -87,7 +80,7 @@ class StartSlackBotServerTest {
     @Test
     void test2 (){
         String message = "from test";
-        HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbot", getPostRequest(), message);
+        HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbot", getHeaders(), message);
         int responseCode = response.statusCode();
         assertEquals(responseCode, 200);
     }
@@ -96,7 +89,7 @@ class StartSlackBotServerTest {
     @Test
     void test3(){
         String message = "from put";
-        HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:9090/slackbot", getPostRequest(), message);
+        HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:9090/slackbot", getHeaders(), message);
         int responseCode = response.statusCode();
         assertEquals(responseCode, 405);
     }
@@ -105,7 +98,7 @@ class StartSlackBotServerTest {
     @Test
     void test4(){
         String message = "from test";
-        HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbott", getPostRequest(), message);
+        HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbott", getHeaders(), message);
         int responseCode = response.statusCode();
         assertEquals(responseCode, 404);
     }
@@ -113,7 +106,7 @@ class StartSlackBotServerTest {
     @DisplayName("Get request on /slackbot")
     @Test
     void test5(){
-        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getPostRequest());
+        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getHeaders());
         int responseCode = response.statusCode();
         assertEquals(responseCode, 200);
     }
@@ -121,7 +114,7 @@ class StartSlackBotServerTest {
     @DisplayName("Testing generated XHTML on /slackbot")
     @Test
     void test6(){
-        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getPostRequest());
+        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getHeaders());
         String html = response.body();
         assertTrue(HtmlValidator.isValid(html));
     }
@@ -129,23 +122,12 @@ class StartSlackBotServerTest {
     @DisplayName("Testing generated XHTML on home page")
     @Test
     void test7(){
-        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/", getPostRequest());
+        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/", getHeaders());
         String html = response.body();
         assertTrue(HtmlValidator.isValid(html));
     }
 
-    @DisplayName("Test")
-    @Test
-    void test8(){
-        HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/", getPostRequest());
-        LOGGER.info("Status code ==> " +response.statusCode());
-        LOGGER.info("Version code ==> " +response.version());
-        LOGGER.info("Request code ==> " +response.request());
-        LOGGER.info("URI code ==> " +response.uri());
-        LOGGER.info("SSL code ==> " +response.sslSession());
-    }
-
-    private HashMap<String,String> getPostRequest () {
+    private HashMap<String,String> getHeaders() {
 //        String request =
 //                "POST /slackbot HTTP/1.1\n" +
 //                        "Host: localhost:9090\n" +

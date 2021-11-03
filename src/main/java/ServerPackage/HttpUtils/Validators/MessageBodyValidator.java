@@ -78,8 +78,13 @@ public class MessageBodyValidator {
     private void validateContentLength() {
         if (valid) {
 //        LOGGER.info("Content Length in header is : " + headers.get("Content-Length") + " type is : " + headers.get("Content-Length").getClass());
-            int expectedBodyLength = Integer.parseInt(headers.get("Content-Length").strip());
-            valid = (expectedBodyLength == body.length());
+            try {
+                int expectedBodyLength = Integer.parseInt(headers.get("Content-Length").strip());
+                valid = (expectedBodyLength == body.length());
+            } catch (NumberFormatException e){
+                LOGGER.info("Content-Length is not a number");
+                valid = false;
+            }
         }
     }
 
