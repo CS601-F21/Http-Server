@@ -1,4 +1,13 @@
+/**
+ * Author name : Shubham Pareek
+ * Author email : spareek@dons.usfca.edu
+ * Class purpose : has a bunch of constants we will be using to make the code more readable
+ */
 package ServerPackage.HttpUtils;
+
+/**
+ * Class has a bunch of constants we will be using throughout the project
+ */
 
 public class HttpConstants {
 
@@ -31,11 +40,10 @@ public class HttpConstants {
     public static final String CONTENT_LENGTH = "Content-Length:";
     public static final String CONNECTION_CLOSE = "Connection: close";
 
-    public static String generateHeader (String VERSION, String CODE){
-        String HEADER = VERSION + " " + CODE + CRLF;
-        return HEADER;
-    }
 
+    /**
+     * This was used to test all the supported headers and to verify whether a header is valid or not
+     */
     public static final String commonHTTPHeaders[] ={
             "WWW-Authenticate", "Authorization", "Proxy-Authenticate", "Proxy-Authorization",
             "Age", "Cache-Control", "Clear-Site-Data", "Expires", "Pragma", "Warning", "Accept-CH",
@@ -62,10 +70,16 @@ public class HttpConstants {
             "SourceMap", "Upgrade", "X-DNS-Prefetch-Control", "DNT"
     };
 
+    /**
+     * All the methods which require a body
+     */
     public static final String[] bodyMethods = {
             HttpConstants.POST, HttpConstants.PATCH, HttpConstants.PUT, HttpConstants.DELETE, HttpConstants.HEAD
     };
 
+    /**
+     * Supported methods for our servers
+     */
     public static final String[] supportedMethods = {
             HttpConstants.GET, HttpConstants.POST
     };

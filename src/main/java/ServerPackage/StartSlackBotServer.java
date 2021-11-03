@@ -1,7 +1,7 @@
 /**
  * Author name : Shubham Pareek
  * Author email : spareek@dons.usfca.edu
- * Class function : start the server
+ * Class function : start the  slack bot server
  */
 package ServerPackage;
 

@@ -112,7 +112,7 @@ public class InvertedIndexServer extends Server{
             try {
                 LOGGER.info("Closing down inverted index server");
                 /**
-                 * Have to close the server itself
+                 * Have to close the server
                  */
                 server.close();
             } catch (IOException e) {

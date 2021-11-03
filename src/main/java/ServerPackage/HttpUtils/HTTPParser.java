@@ -1,3 +1,8 @@
+/**
+ * Author name : Shubham Pareek
+ * Author email : spareek@dons.usfca.edu
+ * Class purpose : parsing the http request
+ */
 package ServerPackage.HttpUtils;
 
 import ServerPackage.HttpUtils.Validators.HttpRequestValidator;
@@ -12,14 +17,7 @@ import java.util.HashMap;
 
 public class HTTPParser {
 
-    /**
-     * TODO create a boolean called valid, the value will initially br true.
-     *      for validating the request, lets say we sent the requestLine to get validated, and it is not valid, we change the boolean
-     *      to false
-     *      then for validating the next next request, header, if valid == true, then only we move along with rest of the code else we return.
-     *      this will ensure that even if one part of our request is not valid, we do not get a false positive
-     */
-
+    
     private static final Logger LOGGER = LogManager.getLogger(HTTPParser.class);
 
     private InputStream inputStream;
