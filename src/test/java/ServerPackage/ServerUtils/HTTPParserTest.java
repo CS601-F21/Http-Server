@@ -38,6 +38,8 @@ class HTTPParserTest {
         BasicConfigurator.configure();
     }
 
+    @DisplayName("Running all tests")
+    @Test
     void runAllTests(){
         test1();
         test2();

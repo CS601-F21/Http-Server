@@ -58,6 +58,8 @@ class StartSlackBotServerTest {
 
     }
 
+    @DisplayName("Running all tests")
+    @Test
     void runAllTests(){
         test1();
         test2();

@@ -28,6 +28,8 @@ class HttpRequestValidatorTest {
         BasicConfigurator.configure();
     }
 
+    @DisplayName("Running all tests")
+    @Test
     void runAllTests(){
         test1();
         test2();
@@ -53,6 +55,8 @@ class HttpRequestValidatorTest {
         test22();
         test23();
         test24();
+        test25();
+        test26();
     }
 
     @DisplayName("Passing Valid request, should work")
@@ -130,7 +134,7 @@ class HttpRequestValidatorTest {
     @DisplayName("Correct Header")
     @Test
     void test9(){
-        LOGGER.info("Validate Header Test 1");
+        LOGGER.info("Validate Header Test 9");
         header = "Accept-Encoding: gzip, deflate";
         valid = HttpRequestValidator.validateHeader(header);
         assertTrue(valid);
@@ -139,7 +143,7 @@ class HttpRequestValidatorTest {
     @DisplayName("Correct Header, with different key-value")
     @Test
     void test10(){
-        LOGGER.info("Validate Header Test 2");
+        LOGGER.info("Validate Header Test 10");
         header = "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:93.0) Gecko/20100101 Firefox/93.0";
         valid = HttpRequestValidator.validateHeader(header);
         assertTrue(valid);
@@ -148,7 +152,7 @@ class HttpRequestValidatorTest {
     @DisplayName("No semi-colon after header name")
     @Test
     void test11(){
-        LOGGER.info("Validate Header Test 3");
+        LOGGER.info("Validate Header Test 11");
         header = "User-Agent Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv;93.0) Gecko/20100101 Firefox/93.0";
         valid = HttpRequestValidator.validateHeader(header);
         assertFalse(valid);
@@ -157,7 +161,7 @@ class HttpRequestValidatorTest {
     @DisplayName("No header name")
     @Test
     void test12(){
-        LOGGER.info("Validate Header Test 3");
+        LOGGER.info("Validate Header Test 12");
         header = " : (X11; Ubuntu; Linux x86_64; rv;93.0) Gecko/20100101 Firefox/93.0";
         valid = HttpRequestValidator.validateHeader(header);
         assertFalse(valid);
@@ -166,7 +170,7 @@ class HttpRequestValidatorTest {
     @DisplayName("No header body")
     @Test
     void test13(){
-        LOGGER.info("Validate Header Test 5");
+        LOGGER.info("Validate Header Test 13");
         header = "someHeader:";
         valid = HttpRequestValidator.validateHeader(header);
         assertFalse(valid);
@@ -175,7 +179,7 @@ class HttpRequestValidatorTest {
     @DisplayName("Empty String")
     @Test
     void test14(){
-        LOGGER.info("Validate Header Test 5");
+        LOGGER.info("Validate Header Test 14");
         header = "";
         valid = HttpRequestValidator.validateHeader(header);
         assertFalse(valid);
@@ -185,7 +189,7 @@ class HttpRequestValidatorTest {
     @Test
     void test15(){
         //because a valid header is just one which can be split into 2, if we split by ":"
-        LOGGER.info("Validate Header Test 7");
+        LOGGER.info("Validate Header Test 15");
         header = "User-Agent: :::::::::::::::::::::::::::::::::::::::::::::";
         valid = HttpRequestValidator.validateHeader(header);
         assertTrue(valid);
@@ -194,7 +198,7 @@ class HttpRequestValidatorTest {
     @DisplayName("Valid body")
     @Test
     void test16(){
-        LOGGER.info("Validate Body Test 1");
+        LOGGER.info("Validate Body Test 16");
         body = "this is the body";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -207,7 +211,7 @@ class HttpRequestValidatorTest {
     @DisplayName("Incorrect body length")
     @Test
     void test17(){
-        LOGGER.info("Validate Body Test 2");
+        LOGGER.info("Validate Body Test 17");
         body = "this is the body";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -217,10 +221,37 @@ class HttpRequestValidatorTest {
         assertFalse(requestIsValid);
     }
 
-    @DisplayName("Body in GET Request")
+    @DisplayName("Required header present")
     @Test
     void test18(){
-        LOGGER.info("Validate Body Test 3");
+        LOGGER.info("Validate Body Test 18");
+        body = "this is the body";
+        requestType = "POST";
+        headerParams = new HashMap<>();
+        headerParams.put("Content-Length", String.valueOf(body.length()));
+        headerParams.put("Content-Type", "Wtv goes in here");
+        headerParams.put("Host", "localhost:9090/blahblah");
+        requestIsValid = HttpRequestValidator.validateAllHeader(headerParams);
+        assertTrue(requestIsValid);
+    }
+
+    @DisplayName("Required header not present")
+    @Test
+    void test19(){
+        LOGGER.info("Validate Body Test 19");
+        body = "this is the body";
+        requestType = "POST";
+        headerParams = new HashMap<>();
+        headerParams.put("Content-Length", String.valueOf(body.length()));
+        headerParams.put("Content-Type", "Wtv goes in here");
+        requestIsValid = HttpRequestValidator.validateAllHeader(headerParams);
+        assertFalse(requestIsValid);
+    }
+
+    @DisplayName("Body in GET Request")
+    @Test
+    void test20(){
+        LOGGER.info("Validate Body Test 20");
         body = "this is the body";
         requestType = "GET";
         headerParams = new HashMap<>();
@@ -232,8 +263,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("Empty body with incorrect length")
     @Test
-    void test19(){
-        LOGGER.info("Validate Body Test 4");
+    void test21(){
+        LOGGER.info("Validate Body Test 21");
         body = "";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -245,8 +276,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("Empty body with correct length")
     @Test
-    void test20(){
-        LOGGER.info("Validate Body Test 5");
+    void test22(){
+        LOGGER.info("Validate Body Test 22");
         body = "";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -258,8 +289,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("Body with non-alphanumeric characters")
     @Test
-    void test21(){
-        LOGGER.info("Validate Body Test 5");
+    void test23(){
+        LOGGER.info("Validate Body Test 23");
         body = "blah blah ___----B^%8L";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -271,8 +302,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("PUT Request with body")
     @Test
-    void test22(){
-        LOGGER.info("Validate Body Test 6");
+    void test24(){
+        LOGGER.info("Validate Body Test 24");
         body = "blah blah ___----B^%8L";
         requestType = "PUT";
         headerParams = new HashMap<>();
@@ -284,8 +315,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("DELETE Request with body")
     @Test
-    void test23(){
-        LOGGER.info("Validate Body Test 6");
+    void test25(){
+        LOGGER.info("Validate Body Test 25");
         body = "blah blah ___----B^%8L";
         requestType = "DELETE";
         headerParams = new HashMap<>();
@@ -297,8 +328,8 @@ class HttpRequestValidatorTest {
 
     @DisplayName("No body length")
     @Test
-    void test24(){
-        LOGGER.info("Validate Body Test 2");
+    void test26(){
+        LOGGER.info("Validate Body Test 26");
         body = "this is the body";
         requestType = "POST";
         headerParams = new HashMap<>();
@@ -307,5 +338,4 @@ class HttpRequestValidatorTest {
         requestIsValid = HttpRequestValidator.validateBody(headerParams, requestType, body);
         assertFalse(requestIsValid);
     }
-
 }
