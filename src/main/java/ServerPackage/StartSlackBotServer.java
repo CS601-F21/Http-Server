@@ -16,6 +16,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 /**
  * There are a lot of classes in this project, the flow of data goes the following way :
@@ -50,6 +51,14 @@ public class StartSlackBotServer {
 
     public static void main (String[] args){
 
+        boolean validParameter = validateParameters(args); //validating params
+        if (!validParameter){
+            throw new InvalidParameterException("The input paramters are not in the expected format\n" +
+                    "The correct format for entering the parameters is -reviews <review_file_name> -qa <qa_file_name>");
+        }
+
+        String configFile = args[2];
+
         /**
          * Configuring the logger
          */
@@ -58,7 +67,7 @@ public class StartSlackBotServer {
         /**
          * We have a config file with a hardcoded location, the file is in json format, and the configurationanager
          */
-        ConfigurationManager configurationManager = new ConfigurationManager("/home/shubham/IdeaProjects/project3-shubham0831/configuration.json");
+        ConfigurationManager configurationManager = new ConfigurationManager(configFile);
 
         /**
          * Getting the port number for the respective severs
@@ -101,5 +110,15 @@ public class StartSlackBotServer {
          * Starting the thread and hence the server
          */
         slackBotStartThread.start();
+    }
+
+    private static boolean validateParameters(String[] args) {
+        for (String name : args){
+            if (!name.endsWith(".json")){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

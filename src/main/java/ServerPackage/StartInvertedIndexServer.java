@@ -31,6 +31,7 @@ public class StartInvertedIndexServer {
 
         String reviewFile = args[0];
         String qaFile = args[1];
+        String configFile = args[2];
 
         /**
          * Configuring the logger
@@ -40,7 +41,7 @@ public class StartInvertedIndexServer {
         /**
          * We have a config file with a hardcoded location, the file is in json format, and the configurationanager
          */
-        ConfigurationManager configurationManager = new ConfigurationManager("/home/shubham/IdeaProjects/project3-shubham0831/configuration.json");
+        ConfigurationManager configurationManager = new ConfigurationManager(configFile);
 
         /**
          * Getting the port number for the respective severs
