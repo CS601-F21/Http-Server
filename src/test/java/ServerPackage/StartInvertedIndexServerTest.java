@@ -41,10 +41,13 @@ class StartInvertedIndexServerTest {
          */
         int indexPort = configurationManager.getIndexPort();
 
+        String file1 = "/home/shubham/IdeaProjects/project3-shubham0831/Cell_Phones_and_Accessories_5.json";
+        String file2 = "/home/shubham/IdeaProjects/project3-shubham0831/qa_Cell_Phones_and_Accessories.json";
+
 
         InvertedIndexServer indexServer = null;
         try {
-            indexServer = new InvertedIndexServer(indexPort);
+            indexServer = new InvertedIndexServer(indexPort, file1, file2);
         } catch (IOException e) {
             e.printStackTrace();
         }

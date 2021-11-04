@@ -57,7 +57,7 @@ public class StartSlackBotServer {
                     "The correct format for entering the parameters is -reviews <review_file_name> -qa <qa_file_name>");
         }
 
-        String configFile = args[2];
+        String configFile = args[0];
 
         /**
          * Configuring the logger
