@@ -16,11 +16,21 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 public class StartInvertedIndexServer {
     private static final Logger LOGGER = LogManager.getLogger(StartInvertedIndexServer.class);
 
     public static void main (String[] args){
+
+        boolean validParameter = validateParameters(args); //validating params
+        if (!validParameter){
+            throw new InvalidParameterException("The input paramters are not in the expected format\n" +
+                                                "The correct format for entering the parameters is -reviews <review_file_name> -qa <qa_file_name>");
+        }
+
+        String reviewFile = args[0];
+        String qaFile = args[1];
 
         /**
          * Configuring the logger
@@ -48,7 +58,7 @@ public class StartInvertedIndexServer {
                 /**
                  * Creating the inverted index server
                  */
-                invertedIndexServer = new InvertedIndexServer(invertedIndexPort);
+                invertedIndexServer = new InvertedIndexServer(invertedIndexPort, reviewFile, qaFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -69,5 +79,15 @@ public class StartInvertedIndexServer {
          * Starting the thread and hence the server
          */
         invertedIndexStartThread.start();
+    }
+
+    private static boolean validateParameters(String[] args) {
+        for (String name : args){
+            if (!name.endsWith(".json")){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

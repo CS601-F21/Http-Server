@@ -31,7 +31,7 @@ public class InvertedIndexServer extends Server{
     //initializing the Logger
     private static final Logger LOGGER = LogManager.getLogger(InvertedIndexServer.class);
 
-    public InvertedIndexServer(int port) throws IOException {
+    public InvertedIndexServer(int port, String reviewFile, String qaFile) throws IOException {
         /**
          * Instantiating the Server class, this lets us have access to the following variables :
          *      1) The server socket
@@ -51,8 +51,8 @@ public class InvertedIndexServer extends Server{
         /**
          * The json files path, which we need to parse and store in the index
          */
-        String reviewFile = "/home/shubham/IdeaProjects/project3-shubham0831/Cell_Phones_and_Accessories_5.json";
-        String qaFile = "/home/shubham/IdeaProjects/project3-shubham0831/qa_Cell_Phones_and_Accessories.json";
+//        String reviewFile = "/home/shubham/IdeaProjects/project3-shubham0831/Cell_Phones_and_Accessories_5.json";
+//        String qaFile = "/home/shubham/IdeaProjects/project3-shubham0831/qa_Cell_Phones_and_Accessories.json";
 
         /**
          * The ReviewList and the QAList objects which are needed for starting the inverted index

@@ -58,7 +58,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing basic response for /find, should work")
-    @RepeatedTest(5)
+    @Test
     void test1 (){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/find", getHeaders());
         int responseCode = response.statusCode();
@@ -66,7 +66,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing basic response for /reviewsearch, should work")
-    @RepeatedTest(5)
+    @Test
     void test2 (){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/reviewsearch", getHeaders());
         int responseCode = response.statusCode();
@@ -74,7 +74,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing basic response for homepage, should work")
-    @RepeatedTest(5)
+    @Test
     void test3 (){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/", getHeaders());
         int responseCode = response.statusCode();
@@ -82,7 +82,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing basic POST request on review search")
-    @RepeatedTest(5)
+    @Test
     void test4 (){
         String message = "fireworks";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/reviewsearch", getHeaders(), message);
@@ -91,7 +91,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing POST request on reviewsearch with non-alphanumeric characters")
-    @RepeatedTest(5)
+    @Test
     void test5 (){
         String message = "fireworks$%^&";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/reviewsearch", getHeaders(), message);
@@ -101,7 +101,7 @@ class StartInvertedIndexServerTest {
 
 
     @DisplayName("Testing basic POST request on find")
-    @RepeatedTest(5)
+    @Test
     void test6 (){
         String message = "8288853439";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/find", getHeaders(), message);
@@ -110,7 +110,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing POST request on find with non-alphanumeric characters")
-    @RepeatedTest(5)
+    @Test
     void test7 (){
         String message = "fireworks$%^&";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/find", getHeaders(), message);
@@ -119,7 +119,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing PUT request on /reviewsearch")
-    @RepeatedTest(5)
+    @Test
     void test8(){
         String message = "from put";
         HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:8080/reviewsearch", getHeaders(), message);
@@ -128,7 +128,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing PUT request on /find")
-    @RepeatedTest(5)
+    @Test
     void test9(){
         String message = "from put";
         HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:8080/find", getHeaders(), message);
@@ -137,7 +137,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Giving invalid address")
-    @RepeatedTest(5)
+    @Test
     void test10(){
         String message = "from test";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/slackbott", getHeaders(), message);
@@ -146,7 +146,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing generated XHTML on /reviewsearch GET")
-    @RepeatedTest(5)
+    @Test
     void test11(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/reviewsearch", getHeaders());
         String html = response.body();
@@ -154,7 +154,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing generated XHTML on /reviewsearch POST")
-    @RepeatedTest(5)
+    @Test
     void test12(){
         String message = "fireworks";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:8080/reviewsearch", getHeaders(), message);
@@ -163,7 +163,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing generated XHTML on /find GET")
-    @RepeatedTest(5)
+    @Test
     void test13(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/reviewsearch", getHeaders());
         String html = response.body();
@@ -171,7 +171,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing generated XHTML on /find POST")
-    @RepeatedTest(5)
+    @Test
     void test14(){
         String message = "8288853439";
         HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:8080/reviewsearch", getHeaders(), message);
@@ -180,7 +180,7 @@ class StartInvertedIndexServerTest {
     }
 
     @DisplayName("Testing generated XHTML on home page")
-    @RepeatedTest(5)
+    @Test
     void test15(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:8080/", getHeaders());
         String html = response.body();
