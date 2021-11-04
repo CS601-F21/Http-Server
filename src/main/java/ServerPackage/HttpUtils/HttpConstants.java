@@ -35,7 +35,7 @@ public class HttpConstants {
     public static final String BAD_REQUEST = "400 Bad Request";
     public static final String NOT_FOUND = "404 Not Found";
     public static final String NOT_ALLOWED = "405 Method Not Allowed";
-
+    public static final String INTERNAL_SERVER_ERROR = "500 Internal Server Error";
     /**FOR SPECIFYING INFORMATION**/
     public static final String CONTENT_LENGTH = "Content-Length:";
     public static final String CONNECTION_CLOSE = "Connection: close";

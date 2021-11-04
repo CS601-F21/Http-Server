@@ -58,18 +58,6 @@ class StartSlackBotServerTest {
 
     }
 
-    @DisplayName("Running all tests")
-    @Test
-    void runAllTests(){
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
-        test6();
-        test7();
-    }
-
     @DisplayName("Testing basic response, should work")
     @Test
     void test1 (){
@@ -87,9 +75,18 @@ class StartSlackBotServerTest {
         assertEquals(responseCode, 200);
     }
 
+    @DisplayName("Testing basic POST request with no body")
+    @Test
+    void test3 (){
+        String message = "";
+        HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbot", getHeaders(), message);
+        int responseCode = response.statusCode();
+        assertEquals(responseCode, 200);
+    }
+
     @DisplayName("Testing PUT request")
     @Test
-    void test3(){
+    void test4(){
         String message = "from put";
         HttpResponse<String> response = HTTPFetcher.doPut("http://localhost:9090/slackbot", getHeaders(), message);
         int responseCode = response.statusCode();
@@ -98,7 +95,7 @@ class StartSlackBotServerTest {
 
     @DisplayName("Giving invalid address")
     @Test
-    void test4(){
+    void test5(){
         String message = "from test";
         HttpResponse<String> response = HTTPFetcher.doPost("http://localhost:9090/slackbott", getHeaders(), message);
         int responseCode = response.statusCode();
@@ -107,7 +104,7 @@ class StartSlackBotServerTest {
 
     @DisplayName("Get request on /slackbot")
     @Test
-    void test5(){
+    void test6(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getHeaders());
         int responseCode = response.statusCode();
         assertEquals(responseCode, 200);
@@ -115,7 +112,7 @@ class StartSlackBotServerTest {
 
     @DisplayName("Testing generated XHTML on /slackbot")
     @Test
-    void test6(){
+    void test7(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/slackbot", getHeaders());
         String html = response.body();
         assertTrue(HtmlValidator.isValid(html));
@@ -123,7 +120,7 @@ class StartSlackBotServerTest {
 
     @DisplayName("Testing generated XHTML on home page")
     @Test
-    void test7(){
+    void test8(){
         HttpResponse<String> response = HTTPFetcher.doGet("http://localhost:9090/", getHeaders());
         String html = response.body();
         assertTrue(HtmlValidator.isValid(html));

@@ -130,6 +130,14 @@ public class ResponseGenerator {
         return response;
     }
 
+    public String INTERNAL_SERVER_ERROR (){
+        HtmlGenerator htmlGenerator = new HtmlGenerator();
+        String generateHtml = htmlGenerator.getBasicHTML("Error 500 Internal Server Error");
+        String response = getResponse(generateHtml, HttpConstants.INTERNAL_SERVER_ERROR);
+
+        return response;
+    }
+
     /**
      * This method is used to combine the Http response and the generated html.
      * @param generatedHtml
