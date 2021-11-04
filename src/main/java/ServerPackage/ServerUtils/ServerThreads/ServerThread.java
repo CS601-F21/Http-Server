@@ -179,7 +179,7 @@ public class ServerThread extends Thread {
                          * Handling the shutdown request from the user
                          */
                         ResponseGenerator responseGenerator = new ResponseGenerator();
-                        String res = responseGenerator.generateHomePageResponse("Shutdown");
+                        String res = responseGenerator.homePageResponse("Shutdown");
                         response.writeResponse(res);
                         runningBoolean.setRunningToFalse();
                     } else {
@@ -197,7 +197,7 @@ public class ServerThread extends Thread {
                      * Generally after shutting down, the server is accepting a request before actually shutting down.
                      */
                     ResponseGenerator responseGenerator = new ResponseGenerator();
-                    String res = responseGenerator.generateHomePageResponse("Shutdown");
+                    String res = responseGenerator.homePageResponse("Shutdown");
                     response.writeResponse(res);
                     return;
                 }

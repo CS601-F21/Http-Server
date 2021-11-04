@@ -28,7 +28,7 @@ public class BadRequestHandler implements Handler{
             /**
              * generating the badrequest response
              */
-            String response = responseGenerator.generateBADREQUESTResponse();
+            String response = responseGenerator.BAD_REQUEST();
 
             /**
              * writing the response

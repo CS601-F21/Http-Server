@@ -38,7 +38,7 @@ public class ResponseGenerator {
      * @param textBoxLabel
      * @return
      */
-    public String generateGETResponse (String title, String action, String textBoxLabel){
+    public String GET(String title, String action, String textBoxLabel){
         LOGGER.info("Generating GET response -------------");
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.getInputForm(title, action, textBoxLabel);
@@ -56,7 +56,7 @@ public class ResponseGenerator {
      * @param searchResults
      * @return
      */
-    public String generateInvertedIndexResponse (String title, String action, String textBoxLabel, ArrayList<String> searchResults){
+    public String invertedIndexResponse(String title, String action, String textBoxLabel, ArrayList<String> searchResults){
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.generateOutputList(title, action, textBoxLabel, searchResults);
         String response = getResponse(generatedHtml, HttpConstants.OK);
@@ -74,7 +74,7 @@ public class ResponseGenerator {
      * @param text
      * @return
      */
-    public String generateSingleLineResponse(String title, String action, String textBoxLabel, String text) {
+    public String singleLineResponse(String title, String action, String textBoxLabel, String text) {
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.generateSingleItemResponse(title, action, textBoxLabel, text);
         String response = getResponse(generatedHtml, HttpConstants.OK);
@@ -86,7 +86,7 @@ public class ResponseGenerator {
      * @param text
      * @return
      */
-    public String generateHomePageResponse (String text){
+    public String homePageResponse(String text){
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.getBasicHTML(text);
         String response = getResponse(generatedHtml, HttpConstants.OK);
@@ -98,7 +98,7 @@ public class ResponseGenerator {
      * If we do not find a path, we call this response. The http code is 404
      * @return
      */
-    public String generateNOTFOUNDResponse (){
+    public String NOT_FOUND(){
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.getBasicHTML("Error 404 Page Not Found");
         String response = getResponse(generatedHtml, HttpConstants.NOT_FOUND);
@@ -110,7 +110,7 @@ public class ResponseGenerator {
      * If the user send a bad request, this is going to be the response
      * @return
      */
-    public String generateBADREQUESTResponse (){
+    public String BAD_REQUEST(){
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generatedHtml = htmlGenerator.getBasicHTML("Error 400 Bad Request");
         String response = getResponse(generatedHtml, HttpConstants.BAD_REQUEST);
@@ -122,7 +122,7 @@ public class ResponseGenerator {
      * If the user uses a method which is not allowed, this is going to be the response
      * @return
      */
-    public String generateMETHODNOTALLOWEDResponse (){
+    public String METHOD_NOT_ALLOWED(){
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         String generateHtml = htmlGenerator.getBasicHTML("Error 405 Method Not Allowed");
         String response = getResponse(generateHtml, HttpConstants.NOT_ALLOWED);

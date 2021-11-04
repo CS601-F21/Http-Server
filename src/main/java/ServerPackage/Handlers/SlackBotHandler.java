@@ -18,7 +18,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -81,7 +80,7 @@ public class SlackBotHandler implements Handler{
              */
             if (httpMethod.equals(HttpConstants.GET)){
                 /**Generating the GET response**/
-                String response = responseGenerator.generateGETResponse("Slack Bot", "/slackbot", "Enter message");
+                String response = responseGenerator.GET("Slack Bot", "/slackbot", "Enter message");
                 /**Writing the response**/
                 res.writeResponse(response);
             } else if (httpMethod.equals(HttpConstants.POST)){
@@ -122,12 +121,12 @@ public class SlackBotHandler implements Handler{
                 String response;
                 //if message is sent we let the user know that
                 if (slackResponseObject.isOk()){
-                    response = responseGenerator.generateSingleLineResponse("Slack Bot", "/slackbot", "Enter Message", "Message Sent");
+                    response = responseGenerator.singleLineResponse("Slack Bot", "/slackbot", "Enter Message", "Message Sent");
                 }
                 //if message is not set, we let the user know
                 else {
                     LOGGER.info("Slack error -> "+ slackResponseObject.getError());
-                    response = responseGenerator.generateSingleLineResponse("Slack Bot", "/slackbot", "Enter Message", "Message Not Sent, slack error");
+                    response = responseGenerator.singleLineResponse("Slack Bot", "/slackbot", "Enter Message", "Message Not Sent, slack error");
                 }
 
                 //finally we write the response
@@ -136,7 +135,7 @@ public class SlackBotHandler implements Handler{
                 /**
                  * If method is neither GET or  POST, we send HttpError 405 Method Not Supported
                  */
-                String response = responseGenerator.generateMETHODNOTALLOWEDResponse();
+                String response = responseGenerator.METHOD_NOT_ALLOWED();
                 res.writeResponse(response);
             }
         } catch (IOException e) {

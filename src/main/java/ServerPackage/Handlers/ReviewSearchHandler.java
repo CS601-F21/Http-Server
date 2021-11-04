@@ -58,7 +58,7 @@ public class ReviewSearchHandler implements Handler{
             if (httpMethod.equals(HttpConstants.GET)){
                 ResponseGenerator responseGenerator = new ResponseGenerator();
                 /**Generating the GET response**/
-                String response = responseGenerator.generateGETResponse("Review Search", "/reviewsearch", "Enter Search Item");
+                String response = responseGenerator.GET("Review Search", "/reviewsearch", "Enter Search Item");
                 /**Writing the response**/
                 res.writeResponse(response);
             } else if (httpMethod.equals(HttpConstants.POST)){
@@ -83,21 +83,21 @@ public class ReviewSearchHandler implements Handler{
                     if (results.size() == 0) {
                         //since we did not find any result we have to send a different response
                         /**Generating the single line response**/
-                        String response = responseGenerator.generateSingleLineResponse("Review Search", "/reviewsearch", "Enter Search Item", "No item found");
+                        String response = responseGenerator.singleLineResponse("Review Search", "/reviewsearch", "Enter Search Item", "No item found");
                         /**Writing the response**/
                         res.writeResponse(response);
                         return;
                     }
 
                     /**Otherwise we pass the arraylist to the response generator and get the response**/
-                    String response = responseGenerator.generateInvertedIndexResponse("Review Search", "/reviewsearch", "Enter Search Item", results);
+                    String response = responseGenerator.invertedIndexResponse("Review Search", "/reviewsearch", "Enter Search Item", results);
                     /**Writing the response**/
                     res.writeResponse(response);
                 }catch (InvalidParameterException e){
                     /**
                      * if the inverted index sends an error we tell the client that
                      */
-                    String response = responseGenerator.generateSingleLineResponse("Review Search", "/reviewsearch", "Enter Search Item", "Invalid Argument");
+                    String response = responseGenerator.singleLineResponse("Review Search", "/reviewsearch", "Enter Search Item", "Invalid Argument");
                     res.writeResponse(response);
                     return;
                 }
@@ -106,7 +106,7 @@ public class ReviewSearchHandler implements Handler{
                  * If method is neither GET or  POST, we send HttpError 405 Method Not Supported
                  */
                 ResponseGenerator responseGenerator = new ResponseGenerator();
-                String response = responseGenerator.generateMETHODNOTALLOWEDResponse();
+                String response = responseGenerator.METHOD_NOT_ALLOWED();
                 res.writeResponse(response);
             }
 

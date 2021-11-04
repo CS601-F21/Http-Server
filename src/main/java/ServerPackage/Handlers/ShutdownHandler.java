@@ -12,7 +12,7 @@ public class ShutdownHandler implements Handler{
     public void handle(HTTPParser req, HttpWriter res) {
         try {
             ResponseGenerator responseGenerator = new ResponseGenerator();
-            String response = responseGenerator.generateNOTFOUNDResponse();
+            String response = responseGenerator.NOT_FOUND();
 
             res.writeResponse(response);
         } catch (IOException e) {

@@ -60,7 +60,7 @@ public class FindHandler implements Handler{
             if (httpMethod.equals(HttpConstants.GET)){
                 ResponseGenerator responseGenerator = new ResponseGenerator();
                 /**Generating the GET response**/
-                String response = responseGenerator.generateGETResponse("Find", "/find", "Enter ASIN");
+                String response = responseGenerator.GET("Find", "/find", "Enter ASIN");
                 /**Writing the response**/
                 res.writeResponse(response);
             } else if (httpMethod.equals(HttpConstants.POST)){
@@ -85,14 +85,14 @@ public class FindHandler implements Handler{
                     if (results.size() == 0){
                         //since we did not find any result we have to send a different response
                         /**Generating the single line response**/
-                        String response = responseGenerator.generateSingleLineResponse("Find", "/find", "Enter Asin", "No item found");
+                        String response = responseGenerator.singleLineResponse("Find", "/find", "Enter Asin", "No item found");
                         /**Writing the response**/
                         res.writeResponse(response);
                         return;
                     }
 
                     /**Otherwise we pass the arraylist to the response generator and get the response**/
-                    String response = responseGenerator.generateInvertedIndexResponse("Find", "/find", "Enter ASIN ", results);
+                    String response = responseGenerator.invertedIndexResponse("Find", "/find", "Enter ASIN ", results);
 
                     /**Writing the response**/
                     res.writeResponse(response);
@@ -100,7 +100,7 @@ public class FindHandler implements Handler{
                     /**
                      * if the inverted index sends an error we tell the client that
                      */
-                    String response = responseGenerator.generateSingleLineResponse("Find", "/find", "Enter Asin", "Invalid Argument");
+                    String response = responseGenerator.singleLineResponse("Find", "/find", "Enter Asin", "Invalid Argument");
                     res.writeResponse(response);
                     return;
                 }
@@ -109,7 +109,7 @@ public class FindHandler implements Handler{
                  * If method is neither GET or  POST, we send HttpError 405 Method Not Supported
                  */
                 ResponseGenerator responseGenerator = new ResponseGenerator();
-                String response = responseGenerator.generateMETHODNOTALLOWEDResponse();
+                String response = responseGenerator.METHOD_NOT_ALLOWED();
                 res.writeResponse(response);
             }
 

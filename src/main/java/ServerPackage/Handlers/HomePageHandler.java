@@ -41,10 +41,10 @@ public class HomePageHandler implements Handler {
              * Generating the appropriate responses
              */
             if (!httpMethod.equals(HttpConstants.GET) && !httpMethod.equals(HttpConstants.POST)){
-                response = responseGenerator.generateMETHODNOTALLOWEDResponse();
+                response = responseGenerator.METHOD_NOT_ALLOWED();
             }
             else {
-                response = responseGenerator.generateHomePageResponse("HOME");
+                response = responseGenerator.homePageResponse("HOME");
             }
 
             res.writeResponse(response);

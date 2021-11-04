@@ -24,7 +24,7 @@ public class PageNotFoundHandler implements Handler{
              * Generating the NOTFOUND response
              */
             ResponseGenerator responseGenerator = new ResponseGenerator();
-            String response = responseGenerator.generateNOTFOUNDResponse();
+            String response = responseGenerator.NOT_FOUND();
 
             /**
              * Writing the response down
