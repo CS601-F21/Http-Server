@@ -5,7 +5,7 @@ import ServerPackage.Handlers.HomePageHandler;
 import ServerPackage.Handlers.ShutdownHandler;
 import ServerPackage.Handlers.SlackBotHandler;
 import ServerPackage.HtmlUtils.HtmlValidator;
-import ServerPackage.Servers.SlackBotServer;
+import ServerPackage.Servers.Server;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -44,14 +44,14 @@ class StartSlackBotServerTest {
 
         String token = configurationManager.getSlackToken();
 
-        SlackBotServer slackServer = null;
+        Server slackServer = null;
         try {
-            slackServer = new SlackBotServer(slackBotPort, token);
+            slackServer = new Server(slackBotPort);
         } catch (IOException e) {
             e.printStackTrace();
         }
         slackServer.addMapping("/", new HomePageHandler());
-        slackServer.addMapping("/slackbot", new SlackBotHandler());
+        slackServer.addMapping("/slackbot", new SlackBotHandler(token));
         slackServer.addMapping("/shutdown", new ShutdownHandler());
         slackServer.addMapping("/shutdown?", new ShutdownHandler());
         slackServer.start();

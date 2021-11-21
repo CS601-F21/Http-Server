@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This is the class for the basic server, it has all the features a normal server should have, and if we do not have to pass an external object
@@ -39,7 +41,7 @@ public class Server extends Thread{
      * This is the PathHandlerMap Object, it stores all the path the server will have handlers for
      */
     protected PathHandlerMap map;
-//    protected volatile boolean running;
+    //protected volatile boolean running;
     /**
      * The RunningBoolean is a simple class which has a boolean object, since it is a class, if we pass this object
      * down a level, and make changes to the object over there, we will still get the latest state of the object over here
@@ -49,6 +51,9 @@ public class Server extends Thread{
      * Boolean to keep tack of whether to continue running the server or not
      */
     protected volatile boolean running;
+
+    //declaring threadpool
+    private ExecutorService threadPool;
 
 
     public Server (int port) throws IOException {
@@ -67,6 +72,9 @@ public class Server extends Thread{
          * The current state of the running variable will be the state of the runningBoolean.isRunning() object
          */
         this.running = runningBoolean.isRunning();
+
+        //initializing thread pool
+        this.threadPool = Executors.newFixedThreadPool(100);
     }
 
     /**
@@ -92,10 +100,11 @@ public class Server extends Thread{
                 LOGGER.info("Connection accepted : " + listenerSocket.getInetAddress());
 
                 /**
-                 * Starting the server thread
+                 * Submitting job to thread pool
                  */
-                ServerThread serverThread = new ServerThread(listenerSocket, map, runningBoolean);
-                serverThread.start();
+                threadPool.submit(new ServerThread(listenerSocket, map, runningBoolean));
+//                ServerThread serverThread = new ServerThread(listenerSocket, map, runningBoolean);
+//                serverThread.start();
 
                 /**
                  * Keeping a track of whether the user wants to shut down the server or not
@@ -112,6 +121,7 @@ public class Server extends Thread{
                  * Closing the server once the user wants to
                  */
                 server.close();
+                threadPool.shutdown();
             } catch (IOException e) {
                 //logging error
                 LOGGER.error("Error in closing server socket : \n" + e);
@@ -119,29 +129,4 @@ public class Server extends Thread{
             }
         }
     }
-
-//    protected boolean checkIfShutdown (Socket socket){
-//        try (
-//                InputStream inputStream = socket.getInputStream();
-//                HttpWriter response = new HttpWriter(socket);
-//        ) {
-//            LOGGER.info("Checking for shutdown request");
-//            HTTPParser httpParser = new HTTPParser(inputStream);
-//            String path = httpParser.getRequestPath();
-//            ResponseGenerator responseGenerator = new ResponseGenerator();
-//            if (httpParser.isRequestIsValid() && path.equals("/shutdown")) {
-//                LOGGER.info("Shutting down the server");
-//                running = false;
-//                String res = responseGenerator.generateSingleLineResponse("test", "/doesnotmatter", "Server shutting down", "Shutdown");
-//                response.writeResponse(res);
-//            }else {
-//                LOGGER.info("Server stays alive");
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return running;
-//    }
 }

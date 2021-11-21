@@ -3,19 +3,18 @@ package ServerPackage;
 import ServerPackage.Config.ConfigurationManager;
 import ServerPackage.Handlers.*;
 import ServerPackage.HtmlUtils.HtmlValidator;
-import ServerPackage.Servers.InvertedIndexServer;
+import ServerPackage.InvertedIndex.InvertedIndexUI;
+import ServerPackage.InvertedIndex.QAList;
+import ServerPackage.InvertedIndex.ReviewList;
+import ServerPackage.Servers.Server;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 
@@ -44,16 +43,27 @@ class StartInvertedIndexServerTest {
         String file1 = "/home/shubham/IdeaProjects/project3-shubham0831/Cell_Phones_and_Accessories_5.json";
         String file2 = "/home/shubham/IdeaProjects/project3-shubham0831/qa_Cell_Phones_and_Accessories.json";
 
+        /**
+         * The ReviewList and the QAList objects which are needed for starting the inverted index
+         */
+        ReviewList reviewList = new ReviewList("ISO-8859-1"); //creating ReviewList
+        QAList qaList = new QAList("ISO-8859-1"); //creating QAList
 
-        InvertedIndexServer indexServer = null;
+        /**
+         * Initializing the inverted index
+         */
+        InvertedIndexUI invertedIndex = new InvertedIndexUI(reviewList, file1, qaList, file2);
+
+
+        Server indexServer = null;
         try {
-            indexServer = new InvertedIndexServer(indexPort, file1, file2);
+            indexServer = new Server(indexPort);
         } catch (IOException e) {
             e.printStackTrace();
         }
         indexServer.addMapping("/", new HomePageHandler());
-        indexServer.addMapping("/find", new FindHandler());
-        indexServer.addMapping("/reviewsearch", new ReviewSearchHandler());
+        indexServer.addMapping("/find", new FindHandler(invertedIndex));
+        indexServer.addMapping("/reviewsearch", new ReviewSearchHandler(invertedIndex));
         indexServer.addMapping("/shutdown", new ShutdownHandler());
         indexServer.addMapping("/shutdown?", new ShutdownHandler());
         indexServer.start();

@@ -6,8 +6,7 @@
 package ServerPackage;
 
 import ServerPackage.Config.ConfigurationManager;
-import ServerPackage.Servers.InvertedIndexServer;
-import ServerPackage.Servers.SlackBotServer;
+import ServerPackage.Servers.Server;
 
 import ServerPackage.Handlers.*;
 
@@ -59,6 +58,8 @@ public class StartSlackBotServer {
 
         String configFile = args[0];
 
+//        String configFile = "/home/shubham/IdeaProjects/project3-shubham0831/configuration.json";
+
         /**
          * Configuring the logger
          */
@@ -85,13 +86,13 @@ public class StartSlackBotServer {
          * Instantiating the thread which will run the SlackBot server
          */
         Thread slackBotStartThread = new Thread(() -> {
-            SlackBotServer slackServer = null;
+            Server slackServer = null;
             try {
                 /**
                  * Creating the SlackBot server
                  * We will also pass the slack token into this server
                  */
-                slackServer = new SlackBotServer(slackBotPort, token);
+                slackServer = new Server(slackBotPort);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,7 +100,7 @@ public class StartSlackBotServer {
              * Adding mappings
              */
             slackServer.addMapping("/", new HomePageHandler());
-            slackServer.addMapping("/slackbot", new SlackBotHandler());
+            slackServer.addMapping("/slackbot", new SlackBotHandler(token));
             slackServer.addMapping("/shutdown", new ShutdownHandler());
             slackServer.addMapping("/shutdown?", new ShutdownHandler());
 //            server.addMapping("//favicon.ico", new PageNotFoundHandler());
