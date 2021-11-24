@@ -8,11 +8,17 @@ import java.io.IOException;
 
 public class ShutdownHandler implements Handler{
     private volatile boolean running;
+
+    public ShutdownHandler (){
+        this.running = true;
+    }
+
     @Override
     public void handle(HTTPParser req, HttpWriter res) {
         try {
             ResponseGenerator responseGenerator = new ResponseGenerator();
-            String response = responseGenerator.NOT_FOUND();
+            String response = responseGenerator.homePageResponse("Server is shut down");
+            initiateShutdown();
 
             res.writeResponse(response);
         } catch (IOException e) {
@@ -20,7 +26,7 @@ public class ShutdownHandler implements Handler{
         }
     }
 
-    public void shutdown (){
+    public void initiateShutdown (){
         this.running = false;
     }
 

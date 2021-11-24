@@ -32,11 +32,7 @@ public class FindHandler implements Handler{
     private static final Logger LOGGER = LogManager.getLogger(FindHandler.class);
 
     /**Constructor will be empty**/
-    public FindHandler (){
-    }
-
-    //method to initialize the invertedIndex in the Handler
-    public void initializeIndex (InvertedIndexUI invertedIndex){
+    public FindHandler (InvertedIndexUI invertedIndex){
         this.invertedIndex = invertedIndex;
     }
 

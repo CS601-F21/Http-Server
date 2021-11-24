@@ -45,12 +45,13 @@ public class SlackBotHandler implements Handler{
      */
     private Gson gson;
 
-    public SlackBotHandler () {
+    public SlackBotHandler (String token) {
         /**
          * Instantiating the class variables
          */
         headers = new HashMap<>();
         gson = new Gson();
+        this.token = token;
 
     }
 
@@ -297,10 +298,4 @@ public class SlackBotHandler implements Handler{
         return headers;
     }
 
-    public void initializeToken(String token) {
-        /**
-         * Method to initialize the slack token
-         */
-        this.token = token;
-    }
 }

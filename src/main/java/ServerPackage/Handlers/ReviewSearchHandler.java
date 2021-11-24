@@ -30,11 +30,7 @@ public class ReviewSearchHandler implements Handler{
     private static final Logger LOGGER = LogManager.getLogger(ReviewSearchHandler.class);
 
     /**Constructor will be empty**/
-    public ReviewSearchHandler(){
-    }
-
-    //method to initialize the invertedIndex in the Handler
-    public void initializeIndex (InvertedIndexUI invertedIndex){
+    public ReviewSearchHandler(InvertedIndexUI invertedIndex){
         this.invertedIndex = invertedIndex;
     }
 

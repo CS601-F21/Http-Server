@@ -67,20 +67,6 @@ public class ServerThread extends Thread {
         this.runningBoolean = runningBoolean;
     }
 
-    public void setInvertedIndex (InvertedIndexUI invertedIndex) {
-        /**
-         * This is where we instantiate the inverted index
-         */
-        this.invertedIndex = invertedIndex;
-    }
-
-    public void setSlackBotToken(String token){
-        /**
-         * This is where we instantiate the MethodsClient object from slack
-         */
-        this.token = token;
-    }
-
     @Override
     public void run() {
         try (
@@ -144,63 +130,20 @@ public class ServerThread extends Thread {
                      * Not every task needs every object, so we initialize the objects for different paths separately.
                      * Each handler is passes the HttpParser Object (aka the request) and the HttpWrite Object (aka the response)
                      */
-                    if (path.equals("/find")) {
-                        /**
-                         * Getting the find handler object
-                         */
-                        FindHandler findHandler = (FindHandler) map.getObject(path);
-                        /**
-                         * Since the find handler requires an Inverted index, we initialize it over here
-                         */
-                        findHandler.initializeIndex(invertedIndex);
-                        findHandler.handle(httpParser, response);
-                    } else if (path.equals("/reviewsearch")) {
-                        /**
-                         * Getting the reviewsearch handler object
-                         */
-                        ReviewSearchHandler searchHandler = (ReviewSearchHandler) map.getObject(path);
-                        /**
-                         * Since the reviewsearch handler requires an Inverted index, we initialize it over here
-                         */
-                        searchHandler.initializeIndex(invertedIndex);
-                        searchHandler.handle(httpParser, response);
-                    } else if (path.equals("/slackbot")) {
-                        /**
-                         * Getting the slackbot handler object
-                         */
-                        SlackBotHandler slackBotHandler = (SlackBotHandler) map.getObject(path);
-                        /**
-                         * The slack bot handler required the MethodsClient object from slack so we initialize it over here
-                         */
-                        slackBotHandler.initializeToken(token);
-                        slackBotHandler.handle(httpParser, response);
-                    } else if (path.equals("/shutdown") || path.equals("/shutdown?")){
-                        /**
-                         * Handling the shutdown request from the user
-                         */
-                        ResponseGenerator responseGenerator = new ResponseGenerator();
-                        String res = responseGenerator.homePageResponse("Shutdown");
-                        response.writeResponse(res);
+                    if (path.equals("/shutdown") || path.equals("/shutdown?")){
                         runningBoolean.setRunningToFalse();
-                    } else {
-                        /**
-                         * This is just the / path for now
-                         */
-                        map.getObject(path).handle(httpParser, response);
                     }
+                    map.getObject(path).handle(httpParser, response);
                 }
-            } else {
-                if (isShutDown){
-                    /**
-                     * If the server has shutdown, but before it could shut down, we get another thread, we generate a homepage
-                     * telling the user the server has shutdown
-                     * Generally after shutting down, the server is accepting a request before actually shutting down.
-                     */
-                    ResponseGenerator responseGenerator = new ResponseGenerator();
-                    String res = responseGenerator.homePageResponse("Shutdown");
-                    response.writeResponse(res);
-                    return;
-                }
+            } else if (isShutDown) {
+                /**
+                 * If the server has shutdown, but before it could shut down, we get another thread, we generate a homepage
+                 * telling the user the server has shutdown
+                 * Generally after shutting down, the server is accepting a request before actually shutting down.
+                 */
+                map.getObject("/shutdown").handle(httpParser, response);
+                return;
+            } else { //if path is invalid
                 /**
                  * If the request is not valid, we let the BadRequestHandler handle that
                  */

@@ -10,7 +10,11 @@ import ServerPackage.Handlers.FindHandler;
 import ServerPackage.Handlers.HomePageHandler;
 import ServerPackage.Handlers.ReviewSearchHandler;
 import ServerPackage.Handlers.ShutdownHandler;
-import ServerPackage.Servers.InvertedIndexServer;
+import ServerPackage.InvertedIndex.InvertedIndexUI;
+import ServerPackage.InvertedIndex.QAList;
+import ServerPackage.InvertedIndex.ReviewList;
+import ServerPackage.ServerUtils.RunningBoolean;
+import ServerPackage.Servers.Server;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -33,13 +37,17 @@ public class StartInvertedIndexServer {
         String qaFile = args[1];
         String configFile = args[2];
 
+//        String reviewFile = "/home/shubham/IdeaProjects/project3-shubham0831/Cell_Phones_and_Accessories_5.json";
+//        String qaFile = "/home/shubham/IdeaProjects/project3-shubham0831/qa_Cell_Phones_and_Accessories.json";
+//        String configFile = "/home/shubham/IdeaProjects/project3-shubham0831/configuration.json";
+
         /**
          * Configuring the logger
          */
         BasicConfigurator.configure();
 
         /**
-         * We have a config file with a hardcoded location, the file is in json format, and the configurationanager
+         * We have a config file with a hardcoded location, the file is in json format, and the configurationManager
          */
         ConfigurationManager configurationManager = new ConfigurationManager(configFile);
 
@@ -48,18 +56,29 @@ public class StartInvertedIndexServer {
          */
         int invertedIndexPort = configurationManager.getIndexPort();
 
+        /**
+         * The ReviewList and the QAList objects which are needed for starting the inverted index
+         */
+        ReviewList reviewList = new ReviewList("ISO-8859-1"); //creating ReviewList
+        QAList qaList = new QAList("ISO-8859-1"); //creating QAList
+
+        /**
+         * Initializing the inverted index
+         */
+        InvertedIndexUI invertedIndex = new InvertedIndexUI(reviewList, reviewFile, qaList, qaFile);
+
         LOGGER.info("Inverted Index Server Starting at port : " + invertedIndexPort);
 
         /**
          * Instantitating the thread which will run the inverted index server
          */
         Thread invertedIndexStartThread = new Thread(() -> {
-            InvertedIndexServer invertedIndexServer = null;
+            Server invertedIndexServer = null;
             try {
                 /**
                  * Creating the inverted index server
                  */
-                invertedIndexServer = new InvertedIndexServer(invertedIndexPort, reviewFile, qaFile);
+                invertedIndexServer = new Server(invertedIndexPort);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,8 +86,8 @@ public class StartInvertedIndexServer {
              * Adding mappings
              */
             invertedIndexServer.addMapping("/", new HomePageHandler());
-            invertedIndexServer.addMapping("/find", new FindHandler());
-            invertedIndexServer.addMapping("/reviewsearch", new ReviewSearchHandler());
+            invertedIndexServer.addMapping("/find", new FindHandler(invertedIndex));
+            invertedIndexServer.addMapping("/reviewsearch", new ReviewSearchHandler(invertedIndex));
             invertedIndexServer.addMapping("/shutdown", new ShutdownHandler());
             invertedIndexServer.addMapping("/shutdown?", new ShutdownHandler());
 //            invertedIndexServer.addMapping("/favicon.ico", new PageNotFoundHandler());
